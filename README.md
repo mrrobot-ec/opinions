@@ -2,6 +2,8 @@
 
 Real-money opinion markets: YES/NO shares trade in cents against an AMM and redeem at the **final vote percentage** — you're not betting on what's true, you're betting on what the crowd believes. Built for speed, voter economy, trust & polish, video at scale, and mobile — with a unique distribution surface: trading over iMessage.
 
+**📚 [Read the full documentation](https://mrrobot-ec.github.io/opinions/)** — a plain-language guide for learning the whole system from zero.
+
 ## Documents
 
 | Doc | What it holds |
