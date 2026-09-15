@@ -1,0 +1,15 @@
+# Review round 3 — final verdicts and resolution
+
+- **grok: FINAL VERDICT sound-to-build** ([grok-r3.md](grok-r3.md)) — all R2 fixes in its domain VERIFIED, no new Phase 0–1 blockers.
+- **codex: FINAL VERDICT fix-first** ([codex-r3.md](codex-r3.md)) — aggregate-then-validate VERIFIED; five remaining findings + regression reconciliations, **all applied post-R3** (this document is the record):
+
+| Finding | Resolution |
+|---|---|
+| codex B1 — expired unconsumed pending row deadlocks its thread under the partial unique index | Expiry sweep step added to the pending protocol (mark expired rows consumed inside the same advisory-lock transaction before insert/read); expiry + two-connection concurrency tests required in Task 8 integration suite (PLAN Task 7 comment + Task 8 Step 4) |
+| codex B2 — `sell_cannot_drain_pool` test snippet contradicted the input caps | Test now accepts `InputTooLarge` for the over-cap input and adds an in-cap case that must hit `DrainsPool` specifically (Task 3) |
+| codex B3 — void-by-historical-replay can debit users who already withdrew (not non-negativity-safe) | **Void redefined as current-state neutral redemption from escrow** (both sides at 50¢ via the Task 6 settlement path, inheriting conservation + dust); §10.2 full unwind demoted to admin fraud tool with queued-receivable semantics (Task 4, spec §4.2/§3.4, D21) |
+| codex M1 — no SQL one-External-per-currency constraint; Phase-1 trigger spec'd on the wrong sum | `create unique index … on ledger_accounts(currency) where owner_type='external'` added; trigger requirement rewritten: per-(txn, currency) grouped sums + reject zero-entry headers (Task 7) |
+| codex M2 — gate fixtures promised but not named; pins not exact | Four fixture files named and created in Task 0 with a `gate-test` recipe wired into `just ci` and hosted CI; exact patch-version pins for tools + exact stable compiler version (Task 0) |
+| Regression sweep — dual MarketState enums; missing `Resolved→Voided` admin edge; ER missing `POOL_RESERVES.market_id`; ER "monthly partitions" residual; open-risk line still demanding partitioning | All reconciled: single canonical enum incl. `Voided`; `VoidByAdmin` from every pre-Paid state; ER updated (pool_reserves composite FKs, one-external note, unpartitioned retention note); open-risk line now tracks retention jobs |
+
+Three rounds are complete per the workstream contract. Codex's post-R3 applications went back to codex for a bounded verification addendum ([codex-r3-addendum.md](codex-r3-addendum.md)): **5 of 6 deltas VERIFIED**; the sixth was my in-cap `DrainsPool` test assertion, which codex proved unreachable (the smaller sell root approaches the opposite reserve asymptotically from below, so the guard always lands under it). Applied codex's prescribed option: the `DrainsPool` error arm is removed entirely (an unreachable arm would also break the 100%-coverage gate) and no-drain is asserted as a property — after every accepted sell, all reserves stay ≥ 1. Final standing: **grok sound-to-build; codex addendum items closed with its own prescribed fixes.** The build proceeded in parallel on the reviewer-cleared foundation.

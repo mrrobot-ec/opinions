@@ -1,0 +1,18 @@
+[workspace]
+resolver = "2"
+members = ["crates/adapters", "crates/application", "crates/domain", "crates/main", "crates/simswarm"]
+
+[workspace.package]
+edition = "2021"
+license = "UNLICENSED"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+unwrap_used = "deny"
+expect_used = "deny"
+todo = "deny"
+dbg_macro = "deny"
+float_arithmetic = "deny"   # the no-floats rule, mechanically enforced

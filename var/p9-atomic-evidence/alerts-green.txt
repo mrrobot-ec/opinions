@@ -1,0 +1,15 @@
+test ops::alerts::tests::an_acked_but_never_paged_incident_stays_pending ... ok
+test ops::alerts::tests::a_successful_first_page_records_one_attempt_at_the_supplied_time ... ok
+test ops::alerts::tests::a_resolved_incident_is_never_redelivered ... ok
+test ops::alerts::tests::a_failing_identity_whose_page_fails_stays_pending_and_the_error_surfaces ... ok
+test ops::alerts::tests::a_continued_pass_with_nothing_open_is_a_no_op ... ok
+test ops::alerts::tests::a_concurrent_raise_opens_exactly_one_incident_and_pages_once ... ok
+test ops::alerts::tests::a_poison_incident_does_not_starve_the_incidents_behind_it ... ok
+test ops::alerts::tests::a_recovered_identity_resolves_and_a_recurrence_pages_a_new_incident ... ok
+test ops::alerts::tests::a_failed_first_page_leaves_the_incident_pending_for_redelivery ... ok
+test ops::alerts::tests::insert_if_absent_reports_the_existing_open_incident_and_reopens_after_resolve ... ok
+test ops::alerts::tests::open_incident_is_deduped_until_resolved_then_repages ... ok
+test ops::alerts::tests::pending_delivery_is_at_least_once_and_missing_ack_is_typed ... ok
+test ops::alerts::tests::an_ongoing_invariant_breach_pages_once_and_then_dedups ... ok
+test ops::alerts::tests::redelivery_stamps_the_supplied_time_and_never_the_unix_epoch ... ok
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 563 filtered out; finished in 0.00s

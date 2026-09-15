@@ -1,0 +1,40 @@
+VERDICT: fix-first
+
+[B1] docs/spec.md §7.5 + conversation-graph: money moves when the LLM Router emits intent=confirm; the "deterministic" gate only checks pending TTL, not that the user actually said confirm — a misroute ("yes show me price", "yeah and cancel", garbled SMS) can execute a live trade. FIX: make confirm a pure lexical/regex gate on the raw inbound text (allowlist: confirm/yes/do it/y) that never consults the LLM; router may only *propose* trade preview, never authorize execute.
+
+[B2] docs/spec.md §7.5 + graph VOTE path: votes are LLM-extracted then POST /votes with no confirm step, yet votes are the resolution oracle that pays real money — irreversible, agent-influenced, and outside the "agent-free money corridor" claim. FIX: require the same preview→pending→explicit-confirm pattern for votes (or a deterministic structured reply "YES 65"), and document votes as oracle-moving actions with equal audit rigor to trades.
+
+[B3] docs/spec.md §3.4 + PLAN roadmap Phase 3: free, one-per-account votes resolve real positions; the dominant exploit is sybil/vote-farm for trading PnL (not cash voter rewards), and integrity/sybil/hidden-tally/sweep only arrive in Phase 3 after money write paths — mechanism is insolvent under attack before the stack exists. FIX: write a vote-oracle threat model now; require Phase-1 vote eligibility (unique phone + device + per-market vote velocity + new-account friction) as launch-blocking for any real-money or even public swarm that claims the mechanism; do not ship trade+vote without a minimum integrity bar.
+
+[B4] docs/spec.md §3.1–3.2 vs §3.3: "75/25 accuracy defuses vote-your-bag" is false for rational large holders — trading PnL dominates rep/score, and the vote→trade gate forces every trader onto the ballot so bag and ballot are coupled by product design. FIX: either separate voters from traders (optional vote, or vote-after-trade cooldown / stake-weighted only for non-holders), or add holder-vote dampening (cap vote weight if open position > X, or exclude positions opened after vote) and publish that as the bag-defense, not the scoring weights.
+
+[M1] docs/spec.md §3.4: final 10 minutes hide tallies while AMM keeps trading — anyone who can estimate or control hidden votes (or leaked internal tallies) has a free last-look against LP and late traders; last-minute vote dumps are the intended attack surface of that window. FIX: freeze trading when tallies hide (closing = no new trades), or shorten/eliminate the hide window and accept transparent sniping; do not hide the oracle while the book stays open.
+
+[M2] docs/spec.md §2.3 + §11: house LP seed is systematically drained by adverse selection when some traders are better-informed about (or control) final v — this is the real house risk, not just "tunable marketing cost." FIX: model expected LP loss under informed fraction + manipulation rate; cap seed, use dynamic fee/impact, and treat LP PnL kill-switch as a launch control, not a post-hoc knob.
+
+[M3] docs/er-diagram.mermaid vs PLAN.md Task 7 / spec §10.3: ER omits agent_runs, agent_steps, pending_actions; TRADES has no run_id/pending_action_id so the promised causal chain run→pending→trade→ledger cannot be queried from the ER contract. FIX: extend ER 1:1 with those tables and add trades.client_run_id (or pending_action_id) FK before migration freezes.
+
+[M4] docs/spec.md §5.1 vs §5.6: "event-sourced core" vs "Postgres state + events_outbox" — outbox is dual-write prevention, not an event store; no domain events table, projections, or replay story for money aggregates. FIX: either commit to state-primary + outbox (drop "event-sourced" language) or add an events table as source of truth with explicit projection rebuild SOP; pick one before application crate design.
+
+[M5] docs/spec.md §11–12 + research-notes: sweepstakes dual-currency is named as the counsel fork that "gates the payments workstream," but ledger schema has no non-withdrawable credits / dual balance — building a single cash ledger first risks a Phase-7 rewrite. FIX: add ledger account flags or credit vs withdrawable owner types now (even if Phase 0 only models the types) and freeze after counsel spike within weeks 1–2, not at money hardening.
+
+[M6] docs/spec.md §5.3 + §12: custodial Solana USDC + internal ledger is money transmission / MSB territory in the US on top of "hardest" opinion-wagering posture; checklist underweights custody licensing and hot-wallet insurance. FIX: put money-transmitter / custody counsel on the day-zero parallel track beside gaming/CFTC questions; until answered, treat mainnet custody design as provisional.
+
+[M7] PLAN.md Phase 0–7 vs research-notes mobile clock: integrity economy is Phase 3, social Phase 4, iOS "fast-follow" while  iOS is already in development — roadmap optimizes for elegant domain purity over the two things that kill a challenger (trust of resolution + mobile presence). FIX: pull minimum integrity + PWA installability into Core loop (Phase 1–2); accept later polish on comments/video over late oracle defenses.
+
+[M8] docs/spec.md §7.5 confirm edge cases: auto-cancel-on-other-intent plus 2-min TTL is sound against stale pending, but concurrent inbound messages on the same phone thread and "yes, but change amount to $20" are unspecified — races can confirm the wrong preview or cancel mid-edit. FIX: serialize graph runs per thread_id; treat any non-pure-confirm message as cancel; re-preview required after any param change; document pending_action as single-flight.
+
+[m1] docs/er-diagram.mermaid VOTE_SCORES/REPUTATION: numeric accuracy/score/rep_ewma contradicts integer-bps domain discipline and invites float drift in leaderboards. FIX: store score_bp/accuracy_bp as int and rep as fixed-point micro-units.
+
+[m2] PLAN.md Task 7 votes unique(market_id,seq): concurrent cast-vote assignment of sequential public numbers will collide under load; flag is correct but needs a designed algorithm now. FIX: specify Phase-1 assignment (transactional max(seq)+1 with retry, or gapless sequence via advisory lock) in the vote use-case ADR.
+
+[m3] Checks out (non-findings worth locking in): complete-set collateralization + integer micro math + pool-favoring rounding are coherent; sell fee-on-proceeds matches ~1% both sides; agent number injection + output guard design is right for display safety; Phase 0 pure domain-first with fake-LLM seam is the correct engineering first slice *if* B1–B3/M3–M5 doc fixes land before schema and converse freeze.
+
+CHECKPOINTS:
+1. Sell-side quadratic: smaller root is the valid root for complete-set sell; isqrt floor + guard loop must not increase k in the user's favor (property tests cover this); c ≥ no (when selling YES) is the correct hard drain guard because burn is limited by the opposite reserve — OK as specified.
+2. Fee on sells after curve: matches buy (fee on notional/proceeds), ~1% effective both sides — OK; document as "fee on trade notional after curve fill."
+3. Rounding table: fee ceil + pool reserve ceil + payout floor can compound beyond 1 micro across a full buy→sell→redeem path but always house-favoring; bound dust in property tests (max dust ≤ f(steps, positions)) rather than claiming "1 micro total."
+4. Scoring tie at actual==5000: awarding majority to both sides is sensible and user-friendly; "nobody gets majority" is harsher and unnecessary — keep, document on How Scoring Works.
+5. Ledger non-negativity: legitimate seed/reversal/payout flows work as balanced non-negative transfers if house/escrow are pre-funded; no negative-capable account required — keep the rule; document genesis funding explicitly.
+6. Schema sum-zero trigger deferred: acceptable for Phase 0 pure domain; make Phase-1 trigger or continuous invariant job blocking before any external money; vote seq concurrency is a Phase-1 design item (see m2), not defer-silently.
+7. Skeleton honesty: build_graph(router=...) is the right seam to later inject gpt-4o-mini structured outputs without graph reshape — OK; do not let router ownership of confirm survive that slip-in (see B1).

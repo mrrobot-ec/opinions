@@ -1,0 +1,6 @@
+test fakes::compliance::tests::a_duplicate_inbox_event_is_a_conflict_not_a_second_row ... ok
+test fakes::compliance::tests::serialize_inbox_is_reentrant_within_one_transaction ... ok
+test fakes::compliance::tests::the_fake_matches_the_pg_contract_on_dests_config_and_key_rotation ... ok
+test fakes::compliance::tests::serialize_inbox_blocks_a_second_tx_on_the_same_key_until_the_first_ends ... ok
+test fakes::compliance::tests::a_dropped_transaction_releases_its_inbox_key ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 575 filtered out; finished in 0.06s

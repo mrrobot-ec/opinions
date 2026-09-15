@@ -1,0 +1,27 @@
+[package]
+name = "application"
+version = "0.1.0"
+edition.workspace = true
+# Proprietary, never published; lets cargo-deny's licenses.private.ignore skip it.
+publish = false
+
+[dependencies]
+domain = { path = "../domain" }
+async-trait = "0.1"
+thiserror = "2"
+uuid = { version = "1", features = ["serde", "v4"] }
+time = { version = "0.3", features = ["serde", "formatting"] }
+serde_json = "1"
+sha2 = "0.10"
+hmac = "0.12"
+serde = { version = "1", features = ["derive"] }
+parking_lot = "0.12"
+# tokio is a regular dependency because contract.rs (the store-generic contract
+# suites reused by every adapter) drives concurrent transactions with tokio::join!.
+tokio = { version = "1", features = ["macros", "sync", "time"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync"] }
+
+[lints]
+workspace = true

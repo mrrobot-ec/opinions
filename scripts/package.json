@@ -1,0 +1,10 @@
+{
+  "name": "opinions-scripts",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Pinned deps for e2e probes (Task 2.5) — no globals",
+  "type": "module",
+  "dependencies": {
+    "ws": "8.18.1"
+  }
+}

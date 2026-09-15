@@ -1,0 +1,98 @@
+
+> web@0.1.0 dev /Users/mrrobot/Documents/personal/opinions/web
+> next dev --turbopack
+
+▲ Next.js 16.3.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.162:3000
+✓ Ready in 237ms
+✓ Running next.config.ts took 16ms
+
+ GET / 200 in 196ms (next.js: 96ms, application-code: 100ms)
+ GET / 200 in 63ms (next.js: 12ms, application-code: 51ms)
+ GET /manifest.webmanifest 200 in 38ms (next.js: 29ms, application-code: 9ms)
+ GET / 200 in 12ms (next.js: 1.2ms, application-code: 10ms)
+ GET / 200 in 52ms (next.js: 12ms, application-code: 39ms)
+ GET /manifest.webmanifest 200 in 6ms (next.js: 3ms, application-code: 3ms)
+ GET /m/demo-coffee 200 in 395ms (next.js: 384ms, application-code: 11ms)
+ GET /manifest.webmanifest 200 in 5ms (next.js: 3ms, application-code: 1.9ms)
+ GET / 200 in 26ms (next.js: 8ms, application-code: 18ms)
+ GET /manifest.webmanifest 200 in 12ms (next.js: 4ms, application-code: 7ms)
+ GET /m/demo-coffee 200 in 36ms (next.js: 21ms, application-code: 15ms)
+ GET /manifest.webmanifest 200 in 6ms (next.js: 3ms, application-code: 3ms)
+ GET /how-it-works 200 in 91ms (next.js: 33ms, application-code: 57ms)
+ GET /manifest.webmanifest 200 in 15ms (next.js: 12ms, application-code: 3ms)
+ GET /m/demo-coffee 200 in 81ms (next.js: 17ms, application-code: 64ms)
+ GET /manifest.webmanifest 200 in 16ms (next.js: 13ms, application-code: 3ms)
+ GET /admin 200 in 137ms (next.js: 118ms, application-code: 19ms)
+ GET /manifest.webmanifest 200 in 5ms (next.js: 3ms, application-code: 3ms)
+ GET /admin/config 200 in 98ms (next.js: 89ms, application-code: 9ms)
+ GET /manifest.webmanifest 200 in 4ms (next.js: 3ms, application-code: 1.8ms)
+ GET /admin/switches 200 in 94ms (next.js: 86ms, application-code: 9ms)
+ GET /manifest.webmanifest 200 in 3ms (next.js: 1.2ms, application-code: 1.8ms)
+ GET /admin/audit 200 in 96ms (next.js: 83ms, application-code: 13ms)
+ GET /manifest.webmanifest 200 in 2ms (next.js: 1.2ms, application-code: 1.2ms)
+ GET /admin 200 in 18ms (next.js: 4ms, application-code: 15ms)
+ GET /manifest.webmanifest 200 in 7ms (next.js: 5ms, application-code: 1.7ms)
+ GET /how-it-works 200 in 26ms (next.js: 5ms, application-code: 21ms)
+ GET /manifest.webmanifest 200 in 5ms (next.js: 1.6ms, application-code: 3ms)
+ GET / 200 in 19ms (next.js: 8ms, application-code: 11ms)
+ GET /manifest.webmanifest 200 in 4ms (next.js: 1.4ms, application-code: 2ms)
+ GET /m/demo-coffee 200 in 24ms (next.js: 8ms, application-code: 16ms)
+ GET /manifest.webmanifest 200 in 4ms (next.js: 2.0ms, application-code: 2ms)
+✓ Compiled in 107ms
+ GET /m/demo-coffee 200 in 22ms (next.js: 8ms, application-code: 14ms)
+ GET /manifest.webmanifest 200 in 3ms (next.js: 1.3ms, application-code: 2ms)
+ GET /m/demo-coffee 200 in 14ms (next.js: 4ms, application-code: 10ms)
+✓ Compiled in 179ms
+ GET /m/demo-coffee 200 in 80ms (next.js: 25ms, application-code: 55ms)
+⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/_051sm50._.js from "127.0.0.1".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['127.0.0.1'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/1afe_next_0s9ta0n._.js from "127.0.0.1".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['127.0.0.1'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+⚠ Blocked cross-origin request to Next.js dev resource /_next/static/chunks/_1vio5cx._.js from "127.0.0.1".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['127.0.0.1'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+⚠ Blocked cross-origin request to Next.js dev resource /_next/hmr from "127.0.0.1".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['127.0.0.1'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET /m/demo-coffee 200 in 17ms (next.js: 3ms, application-code: 15ms)
+ GET /m/demo-coffee 200 in 43ms (next.js: 10ms, application-code: 33ms)
+ GET /m/demo-coffee 200 in 27ms (next.js: 3ms, application-code: 24ms)
+ GET /m/demo-coffee 200 in 27ms (next.js: 3ms, application-code: 24ms)
+ GET /m/demo-coffee 200 in 20ms (next.js: 3ms, application-code: 17ms)
+[?25h

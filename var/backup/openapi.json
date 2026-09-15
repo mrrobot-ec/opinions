@@ -1,0 +1,4772 @@
+{
+  "components": {
+    "schemas": {
+      "AdvanceMarketRequest": {
+        "properties": {
+          "event": {
+            "description": "Lifecycle event name, e.g. `go_live`, `enter_close_window`, `close`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event"
+        ],
+        "type": "object"
+      },
+      "ApiError": {
+        "description": "One envelope for every error response: `{ \"code\", \"message\" }`.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "type": "object"
+      },
+      "AuditActionDto": {
+        "description": "One redacted audit row (`audit-read` capability; digests only).",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "actor_role": {
+            "type": "string"
+          },
+          "actor_token_digest": {
+            "type": "string"
+          },
+          "at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "subject": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "actor_role",
+          "actor_token_digest",
+          "action",
+          "subject",
+          "at"
+        ],
+        "type": "object"
+      },
+      "AuditPageDto": {
+        "properties": {
+          "actions": {
+            "items": {
+              "$ref": "#/components/schemas/AuditActionDto"
+            },
+            "type": "array"
+          },
+          "next_before": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "actions"
+        ],
+        "type": "object"
+      },
+      "CastVoteRequest": {
+        "properties": {
+          "crowd_guess_pct": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "market_ref": {
+            "type": "string"
+          },
+          "run_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "market_ref",
+          "side",
+          "crowd_guess_pct",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "CommentDto": {
+        "properties": {
+          "author_handle": {
+            "type": "string"
+          },
+          "author_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "depth": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "moderation_status": {
+            "type": "string"
+          },
+          "parent_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reply_count": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "score": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "market_id",
+          "author_id",
+          "author_handle",
+          "body",
+          "depth",
+          "score",
+          "reply_count",
+          "moderation_status",
+          "created_at"
+        ],
+        "type": "object"
+      },
+      "CommentPageDto": {
+        "properties": {
+          "comments": {
+            "items": {
+              "$ref": "#/components/schemas/CommentDto"
+            },
+            "type": "array"
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "comments"
+        ],
+        "type": "object"
+      },
+      "CommentReportDto": {
+        "properties": {
+          "report_count": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "reported": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "reported",
+          "report_count"
+        ],
+        "type": "object"
+      },
+      "CommentVoteDto": {
+        "properties": {
+          "score": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "score"
+        ],
+        "type": "object"
+      },
+      "ConfigAppliedDto": {
+        "description": "Result of a direct (non-sensitive) apply.",
+        "properties": {
+          "changed_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "generation": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "generation",
+          "changed_keys"
+        ],
+        "type": "object"
+      },
+      "ConfigEntryDto": {
+        "description": "One committed config entry.",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {}
+        },
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object"
+      },
+      "ConfigProposalDto": {
+        "properties": {
+          "base_generation": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "patch": {},
+          "reason": {
+            "type": "string"
+          },
+          "resulting_generation": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "base_generation",
+          "patch",
+          "reason",
+          "expires_at"
+        ],
+        "type": "object"
+      },
+      "ConfigSnapshotDto": {
+        "description": "The complete committed snapshot plus its generation watermark.",
+        "properties": {
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/ConfigEntryDto"
+            },
+            "type": "array"
+          },
+          "generation": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "generation",
+          "entries"
+        ],
+        "type": "object"
+      },
+      "CreateConfigProposalRequest": {
+        "description": "Two-phase proposal creation for sensitive keys (D24). Exactly one of\n`patch` / `revert_of_generation` must be present: the latter pre-fills an\nemergency-revert patch from that generation's `config_changes` history\n(`old` values; pause keys stripped) under the SAME dual control.",
+        "properties": {
+          "idempotency_key": {
+            "type": "string"
+          },
+          "patch": {},
+          "reason": {
+            "type": "string"
+          },
+          "revert_of_generation": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "reason",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "CreateDraftRequest": {
+        "properties": {
+          "allow_fallback": {
+            "type": "boolean"
+          },
+          "source": {
+            "$ref": "#/components/schemas/DraftSourceDto"
+          },
+          "tier": {
+            "$ref": "#/components/schemas/DraftTierDto"
+          },
+          "topics": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "topics",
+          "tier",
+          "source"
+        ],
+        "type": "object"
+      },
+      "CreateUserRequest": {
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "created_at_override": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "handle": {
+            "type": "string"
+          },
+          "rep_seed_micro": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "handle",
+          "channel",
+          "address"
+        ],
+        "type": "object"
+      },
+      "CuratorDecisionDto": {
+        "enum": [
+          "resolve_at_tally",
+          "void"
+        ],
+        "type": "string"
+      },
+      "DailyFeeRowDto": {
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "payout_dust_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "total_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "trade_fee_micro": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "day",
+          "trade_fee_micro",
+          "payout_dust_micro",
+          "total_micro"
+        ],
+        "type": "object"
+      },
+      "DraftDto": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "fallback_from": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DraftSourceDto"
+              }
+            ]
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "publish_at": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "publish_stage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "published_market_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "$ref": "#/components/schemas/DraftSourceDto"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/DraftSpecDto"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "spec",
+          "source",
+          "status",
+          "expires_at",
+          "created_at"
+        ],
+        "type": "object"
+      },
+      "DraftSourceDto": {
+        "enum": [
+          "template",
+          "llm"
+        ],
+        "type": "string"
+      },
+      "DraftSpecDto": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "fee_bps": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "hidden_window_secs": {
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "min_votes_to_resolve": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "open_secs": {
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "question": {
+            "type": "string"
+          },
+          "seed_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "tier": {
+            "$ref": "#/components/schemas/DraftTierDto"
+          },
+          "video_script": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "description",
+          "video_script",
+          "slug",
+          "tier",
+          "seed_micro",
+          "fee_bps",
+          "min_votes_to_resolve",
+          "open_secs",
+          "hidden_window_secs"
+        ],
+        "type": "object"
+      },
+      "DraftTierDto": {
+        "enum": [
+          "daily",
+          "flash"
+        ],
+        "type": "string"
+      },
+      "DualControlRequest": {
+        "description": "Dual-control proposal body (unwind / remedial credit / write-off): the\nacting principal comes from RBAC; the reason is mandatory.",
+        "properties": {
+          "idempotency_key": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "EditDraftRequest": {
+        "properties": {
+          "reviewer_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/DraftSpecDto"
+          }
+        },
+        "required": [
+          "reviewer_id",
+          "spec"
+        ],
+        "type": "object"
+      },
+      "FaucetDepositDto": {
+        "properties": {
+          "amount_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ledger_txn": {
+            "description": "`None` on a replay observed through a different idempotency key.",
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "amount_micro",
+          "replayed"
+        ],
+        "type": "object"
+      },
+      "FaucetDepositRequest": {
+        "description": "Staging faucet deposit (two-factor mounted; capped; audited).",
+        "properties": {
+          "amount_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "amount_micro",
+          "reason",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "FlaggedMarketDto": {
+        "properties": {
+          "curator_flagged_at": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "integrity_due_at": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "report": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IntegrityReportDto"
+              }
+            ]
+          },
+          "slug": {
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/MarketStateDto"
+          }
+        },
+        "required": [
+          "market_id",
+          "slug",
+          "question",
+          "state"
+        ],
+        "type": "object"
+      },
+      "HolderDto": {
+        "properties": {
+          "cost_micro": {
+            "description": "Ranked by committed capital; not mark-to-market value.",
+            "format": "int64",
+            "type": "integer"
+          },
+          "handle": {
+            "type": "string"
+          },
+          "tier": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "handle",
+          "tier",
+          "cost_micro"
+        ],
+        "type": "object"
+      },
+      "HoldersDto": {
+        "properties": {
+          "no": {
+            "items": {
+              "$ref": "#/components/schemas/HolderDto"
+            },
+            "type": "array"
+          },
+          "yes": {
+            "items": {
+              "$ref": "#/components/schemas/HolderDto"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "yes",
+          "no"
+        ],
+        "type": "object"
+      },
+      "IntegrityReportDto": {
+        "properties": {
+          "checks": {},
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "verdict": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "checks",
+          "verdict",
+          "created_at"
+        ],
+        "type": "object"
+      },
+      "InvariantIdentityDto": {
+        "description": "One identity's result inside the invariant report (D27).",
+        "properties": {
+          "detail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "identity": {
+            "type": "string"
+          },
+          "pass": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "identity",
+          "pass"
+        ],
+        "type": "object"
+      },
+      "InvariantReportDto": {
+        "description": "`GET /admin/invariants`: one repeatable-read snapshot verdict.",
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "identities": {
+            "items": {
+              "$ref": "#/components/schemas/InvariantIdentityDto"
+            },
+            "type": "array"
+          },
+          "pass": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "as_of",
+          "pass",
+          "identities"
+        ],
+        "type": "object"
+      },
+      "MarkNotificationsReadRequest": {
+        "properties": {
+          "ids": {
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "ids"
+        ],
+        "type": "object"
+      },
+      "MarketAdvancedDto": {
+        "properties": {
+          "from_state": {
+            "$ref": "#/components/schemas/MarketStateDto"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/MarketStateDto"
+          }
+        },
+        "required": [
+          "market_id",
+          "state",
+          "from_state"
+        ],
+        "type": "object"
+      },
+      "MarketStateDto": {
+        "enum": [
+          "draft",
+          "scheduled",
+          "live",
+          "closing",
+          "closed",
+          "resolving",
+          "resolved",
+          "paid",
+          "voided"
+        ],
+        "type": "string"
+      },
+      "MarketSummaryDto": {
+        "properties": {
+          "closes_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "no_outcome_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "poster_asset_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "price_no_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "price_yes_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "question": {
+            "type": "string"
+          },
+          "server_now": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "slug": {
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/MarketStateDto"
+          },
+          "tally_hidden_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "tally_no": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "tally_yes": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "under_review": {
+            "type": "boolean"
+          },
+          "video_asset_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "yes_outcome_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "question",
+          "state",
+          "yes_outcome_id",
+          "no_outcome_id",
+          "price_yes_micro",
+          "price_no_micro",
+          "closes_at",
+          "tally_hidden_at",
+          "under_review"
+        ],
+        "type": "object"
+      },
+      "MarketUnwindDto": {
+        "description": "Unwind authority state (D30).",
+        "properties": {
+          "confirm_not_before": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "reversal_txn": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stage": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "market_id",
+          "stage",
+          "reason",
+          "confirm_not_before"
+        ],
+        "type": "object"
+      },
+      "ModerateCommentRequest": {
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ModeratedCommentDto": {
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "NotificationDto": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "payload": {},
+          "read_at": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_seq": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "payload",
+          "created_at"
+        ],
+        "type": "object"
+      },
+      "NotificationPageDto": {
+        "properties": {
+          "notifications": {
+            "items": {
+              "$ref": "#/components/schemas/NotificationDto"
+            },
+            "type": "array"
+          },
+          "unread_count": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "notifications",
+          "unread_count"
+        ],
+        "type": "object"
+      },
+      "PlaceTradeRequest": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/TradeActionDto"
+          },
+          "amount_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "expected_config_version": {
+            "description": "The preview's `config_version` echo (D36: required).",
+            "format": "int64",
+            "type": "integer"
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "market_ref": {
+            "type": "string"
+          },
+          "pending_action_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "run_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "market_ref",
+          "side",
+          "action",
+          "amount_micro",
+          "idempotency_key",
+          "expected_config_version"
+        ],
+        "type": "object"
+      },
+      "PositionDto": {
+        "properties": {
+          "cost_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "outcome_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "realized_pnl_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "rep_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "shares_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "tier": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "market_id",
+          "outcome_id",
+          "side",
+          "shares_micro",
+          "cost_micro",
+          "realized_pnl_micro",
+          "rep_micro",
+          "tier"
+        ],
+        "type": "object"
+      },
+      "PostCommentRequest": {
+        "properties": {
+          "body": {
+            "type": "string"
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "parent_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "body",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "PreviewTradeRequest": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/TradeActionDto"
+          },
+          "amount_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "market_ref": {
+            "type": "string"
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "market_ref",
+          "side",
+          "action",
+          "amount_micro"
+        ],
+        "type": "object"
+      },
+      "PricePointDto": {
+        "properties": {
+          "avg_price_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "bucket_start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "trades": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "volume_micro": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "bucket_start",
+          "avg_price_micro",
+          "volume_micro",
+          "trades"
+        ],
+        "type": "object"
+      },
+      "ProfileTradeDto": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/TradeActionDto"
+          },
+          "collateral_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "market_ref": {
+            "type": "string"
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "trade_seq": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "market_id",
+          "market_ref",
+          "side",
+          "action",
+          "collateral_micro",
+          "created_at",
+          "trade_seq"
+        ],
+        "type": "object"
+      },
+      "ProfileVoteDto": {
+        "properties": {
+          "cast_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "market_question": {
+            "type": "string"
+          },
+          "score_bp": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "side": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SideDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "market_id",
+          "market_question",
+          "cast_at"
+        ],
+        "type": "object"
+      },
+      "PublishDraftDto": {
+        "properties": {
+          "draft_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "replayed": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "draft_id",
+          "market_id",
+          "replayed"
+        ],
+        "type": "object"
+      },
+      "PublishStatusDto": {
+        "description": "`GET /admin/drafts/{id}/publish_status` — the 202 status URL target for\nthe command-based publish_now (codex r3 NEW-4).",
+        "properties": {
+          "draft_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "result_market_id": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "status_url": {
+            "description": "Poll here (also returned by the 202 publish-now authorization).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "draft_id",
+          "status",
+          "status_url"
+        ],
+        "type": "object"
+      },
+      "ReceivableWriteOffDto": {
+        "properties": {
+          "amount_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "receivable_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "receivable_id",
+          "amount_micro",
+          "status"
+        ],
+        "type": "object"
+      },
+      "RemedialCreditDto": {
+        "properties": {
+          "amount_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "market_id",
+          "user_id",
+          "amount_micro",
+          "status"
+        ],
+        "type": "object"
+      },
+      "RemedialCreditRequest": {
+        "description": "Remedial credit body (grok r2 N2): dual-controlled, capped, audited.",
+        "properties": {
+          "amount_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "amount_micro",
+          "reason",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "ReportCommentRequest": {
+        "properties": {
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object"
+      },
+      "ReportedCommentDto": {
+        "properties": {
+          "comment": {
+            "$ref": "#/components/schemas/CommentDto"
+          },
+          "report_count": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "reporters": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "comment",
+          "report_count",
+          "reporters"
+        ],
+        "type": "object"
+      },
+      "ResolveMarketDto": {
+        "properties": {
+          "actual_yes_bps": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "ledger_txn": {
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "state": {
+            "$ref": "#/components/schemas/MarketStateDto"
+          },
+          "voided": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "market_id",
+          "state",
+          "voided",
+          "replayed"
+        ],
+        "type": "object"
+      },
+      "ResolveMarketRequest": {
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/CuratorDecisionDto"
+          }
+        },
+        "required": [
+          "decision"
+        ],
+        "type": "object"
+      },
+      "ReviewDraftRequest": {
+        "properties": {
+          "reviewer_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reviewer_id"
+        ],
+        "type": "object"
+      },
+      "SetConfigRequest": {
+        "description": "Typed patch over the prospective snapshot (D24 write path). Non-sensitive\nkeys apply directly; sensitive keys are rejected toward the proposal flow.",
+        "properties": {
+          "expected_base_generation": {
+            "description": "Optimistic base; a moved generation is a typed conflict.",
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "patch": {
+            "description": "Map of key → new value."
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "patch",
+          "reason",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "SettleConfigProposalRequest": {
+        "description": "Confirm/reject body: the acting principal comes from RBAC, the reason is\nrecorded in the audit fact.",
+        "properties": {
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "SideDto": {
+        "enum": [
+          "yes",
+          "no"
+        ],
+        "type": "string"
+      },
+      "TapeRowDto": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/TradeActionDto"
+          },
+          "collateral_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "handle": {
+            "type": "string"
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "trade_seq": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "handle",
+          "side",
+          "action",
+          "collateral_micro",
+          "created_at",
+          "trade_seq"
+        ],
+        "type": "object"
+      },
+      "TradeActionDto": {
+        "enum": [
+          "buy",
+          "sell"
+        ],
+        "type": "string"
+      },
+      "TradePreviewDto": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/TradeActionDto"
+          },
+          "avg_price_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "config_version": {
+            "description": "Config generation this preview quoted against (D25a). Echo it back\nas `expected_config_version` when placing the trade.",
+            "format": "int64",
+            "type": "integer"
+          },
+          "fee_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "gross_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "shares_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          }
+        },
+        "required": [
+          "market_id",
+          "side",
+          "action",
+          "shares_micro",
+          "gross_micro",
+          "fee_micro",
+          "avg_price_micro",
+          "config_version"
+        ],
+        "type": "object"
+      },
+      "TradeReceiptDto": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/TradeActionDto"
+          },
+          "avg_price_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "fee_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "gross_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ledger_txn": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "shares_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "trade_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "trade_id",
+          "ledger_txn",
+          "side",
+          "action",
+          "shares_micro",
+          "gross_micro",
+          "fee_micro",
+          "avg_price_micro",
+          "replayed"
+        ],
+        "type": "object"
+      },
+      "TraderRowDto": {
+        "properties": {
+          "handle": {
+            "type": "string"
+          },
+          "realizations": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "realized_pnl_micro": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "handle",
+          "realized_pnl_micro",
+          "realizations"
+        ],
+        "type": "object"
+      },
+      "UnreadCountDto": {
+        "properties": {
+          "unread_count": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "unread_count"
+        ],
+        "type": "object"
+      },
+      "UpdatedDto": {
+        "properties": {
+          "updated": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "updated"
+        ],
+        "type": "object"
+      },
+      "UserIdDto": {
+        "properties": {
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object"
+      },
+      "UserProfileDto": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "handle": {
+            "type": "string"
+          },
+          "realized_pnl_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "recent_trades": {
+            "items": {
+              "$ref": "#/components/schemas/ProfileTradeDto"
+            },
+            "type": "array"
+          },
+          "recent_votes": {
+            "items": {
+              "$ref": "#/components/schemas/ProfileVoteDto"
+            },
+            "type": "array"
+          },
+          "rep_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "tier": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "voter": {
+            "$ref": "#/components/schemas/VoterSummaryDto"
+          }
+        },
+        "required": [
+          "user_id",
+          "handle",
+          "created_at",
+          "rep_micro",
+          "tier",
+          "voter",
+          "realized_pnl_micro",
+          "recent_trades",
+          "recent_votes"
+        ],
+        "type": "object"
+      },
+      "VoteCommentRequest": {
+        "properties": {
+          "idempotency_key": {
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "value": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "user_id",
+          "value",
+          "idempotency_key"
+        ],
+        "type": "object"
+      },
+      "VoteReceiptDto": {
+        "properties": {
+          "crowd_guess_pct": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "market_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "seq": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "side": {
+            "$ref": "#/components/schemas/SideDto"
+          },
+          "vote_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "vote_id",
+          "market_id",
+          "side",
+          "crowd_guess_pct",
+          "replayed"
+        ],
+        "type": "object"
+      },
+      "VoterRowDto": {
+        "properties": {
+          "avg_score_bp": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "handle": {
+            "type": "string"
+          },
+          "markets_scored": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "tier": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "handle",
+          "avg_score_bp",
+          "markets_scored",
+          "tier"
+        ],
+        "type": "object"
+      },
+      "VoterSummaryDto": {
+        "properties": {
+          "avg_score_bp": {
+            "format": "int64",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "markets_scored": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "markets_scored"
+        ],
+        "type": "object"
+      },
+      "WithdrawalEligibilityDto": {
+        "description": "`GET /admin/users/{id}/withdrawal_eligibility` (D30).",
+        "properties": {
+          "cash_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "eligible": {
+            "type": "boolean"
+          },
+          "open_receivables_micro": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "cash_micro",
+          "open_receivables_micro",
+          "eligible"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "",
+    "license": {
+      "name": ""
+    },
+    "title": "adapters",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/admin/audit": {
+      "get": {
+        "operationId": "audit_read",
+        "parameters": [
+          {
+            "description": "Strictly-before cursor (RFC 3339); omit for the newest page.",
+            "in": "path",
+            "name": "before",
+            "required": true,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          {
+            "description": "Page size, 1..=200 (default 50).",
+            "in": "path",
+            "name": "limit",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditPageDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/comments/reported": {
+      "get": {
+        "operationId": "admin_reported_comments",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ReportedCommentDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/comments/{id}/moderate": {
+      "post": {
+        "operationId": "admin_moderate_comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModerateCommentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeratedCommentDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/config": {
+      "get": {
+        "operationId": "get_config",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigSnapshotDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      },
+      "post": {
+        "operationId": "set_config",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetConfigRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigAppliedDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/config/proposals": {
+      "post": {
+        "operationId": "create_proposal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConfigProposalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigProposalDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/config/proposals/{id}/confirm": {
+      "post": {
+        "operationId": "confirm_proposal",
+        "parameters": [
+          {
+            "description": "Proposal id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettleConfigProposalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigProposalDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/config/proposals/{id}/reject": {
+      "post": {
+        "operationId": "reject_proposal",
+        "parameters": [
+          {
+            "description": "Proposal id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettleConfigProposalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigProposalDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/deposits": {
+      "post": {
+        "operationId": "faucet_deposit",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FaucetDepositRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FaucetDepositDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/drafts": {
+      "get": {
+        "operationId": "list_drafts",
+        "parameters": [
+          {
+            "description": "maximum drafts, 1..=500",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DraftDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "invalid admin token"
+          },
+          "422": {
+            "description": "invalid limit"
+          }
+        },
+        "tags": [
+          "content"
+        ]
+      },
+      "post": {
+        "operationId": "create_drafts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDraftRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DraftDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "invalid admin token"
+          },
+          "409": {
+            "description": "draft admission limit reached"
+          },
+          "422": {
+            "description": "invalid draft request"
+          }
+        },
+        "tags": [
+          "content"
+        ]
+      }
+    },
+    "/admin/drafts/{id}": {
+      "patch": {
+        "operationId": "edit_draft",
+        "parameters": [
+          {
+            "description": "draft id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDraftRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "invalid admin token"
+          },
+          "404": {
+            "description": "unknown draft"
+          },
+          "409": {
+            "description": "draft is not editable"
+          }
+        },
+        "tags": [
+          "content"
+        ]
+      }
+    },
+    "/admin/drafts/{id}/approve": {
+      "post": {
+        "operationId": "approve_draft",
+        "parameters": [
+          {
+            "description": "draft id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewDraftRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "invalid admin token"
+          },
+          "404": {
+            "description": "unknown draft"
+          },
+          "409": {
+            "description": "draft cannot be approved"
+          }
+        },
+        "tags": [
+          "content"
+        ]
+      }
+    },
+    "/admin/drafts/{id}/publish_now": {
+      "post": {
+        "operationId": "publish_now",
+        "parameters": [
+          {
+            "description": "draft id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishStatusDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "invalid admin token"
+          },
+          "404": {
+            "description": "unknown draft"
+          },
+          "409": {
+            "description": "draft is not approved"
+          }
+        },
+        "tags": [
+          "content"
+        ]
+      }
+    },
+    "/admin/drafts/{id}/publish_status": {
+      "get": {
+        "operationId": "publish_status",
+        "parameters": [
+          {
+            "description": "Draft id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishStatusDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/drafts/{id}/reject": {
+      "post": {
+        "operationId": "reject_draft",
+        "parameters": [
+          {
+            "description": "draft id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewDraftRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "invalid admin token"
+          },
+          "404": {
+            "description": "unknown draft"
+          },
+          "409": {
+            "description": "draft cannot be rejected"
+          }
+        },
+        "tags": [
+          "content"
+        ]
+      }
+    },
+    "/admin/fees/summary": {
+      "get": {
+        "description": "Fees-account revenue split into trade fees and payout-transaction dust.",
+        "operationId": "admin_fee_summary",
+        "parameters": [
+          {
+            "description": "UTC lookback days, default 30",
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DailyFeeRowDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/invariants": {
+      "get": {
+        "operationId": "invariants",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvariantReportDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/markets/flagged": {
+      "get": {
+        "operationId": "admin_flagged_markets",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FlaggedMarketDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/markets/{id}/advance": {
+      "post": {
+        "operationId": "admin_advance",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvanceMarketRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketAdvancedDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/markets/{id}/remedial_credit/confirm": {
+      "post": {
+        "operationId": "remedial_credit_confirm",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualControlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemedialCreditDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/markets/{id}/remedial_credit/propose": {
+      "post": {
+        "operationId": "remedial_credit_propose",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemedialCreditRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemedialCreditDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/markets/{id}/resolve": {
+      "post": {
+        "operationId": "admin_resolve",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ResolveMarketRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResolveMarketDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/markets/{id}/unwind/confirm": {
+      "post": {
+        "operationId": "unwind_confirm",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualControlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketUnwindDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/markets/{id}/unwind/propose": {
+      "post": {
+        "operationId": "unwind_propose",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualControlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketUnwindDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/markets/{id}/unwind/reject": {
+      "post": {
+        "operationId": "unwind_reject",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualControlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketUnwindDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/receivables/{id}/write_off/confirm": {
+      "post": {
+        "operationId": "write_off_confirm",
+        "parameters": [
+          {
+            "description": "Receivable id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualControlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceivableWriteOffDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/receivables/{id}/write_off/propose": {
+      "post": {
+        "operationId": "write_off_propose",
+        "parameters": [
+          {
+            "description": "Receivable id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DualControlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceivableWriteOffDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/admin/users/{id}/withdrawal_eligibility": {
+      "get": {
+        "operationId": "withdrawal_eligibility",
+        "parameters": [
+          {
+            "description": "User id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WithdrawalEligibilityDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/assets/{file}": {
+      "get": {
+        "operationId": "serve_asset",
+        "parameters": [
+          {
+            "description": "`{job_id}.svg`",
+            "in": "path",
+            "name": "file",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "finalized artifact bytes"
+          },
+          "404": {
+            "description": "unknown job or artifact"
+          },
+          "409": {
+            "description": "job not finalized"
+          }
+        },
+        "tags": [
+          "video"
+        ]
+      }
+    },
+    "/comments/{id}/report": {
+      "post": {
+        "operationId": "report_comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportCommentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentReportDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "social"
+        ]
+      }
+    },
+    "/comments/{id}/vote": {
+      "post": {
+        "operationId": "vote_comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoteCommentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentVoteDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "social"
+        ]
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "healthz",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        },
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/leaderboards/traders": {
+      "get": {
+        "description": "Settled/realized PnL in window — not mark-to-market.",
+        "operationId": "leaderboard_traders",
+        "parameters": [
+          {
+            "description": "UTC lookback days, default 7",
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Row limit, default 10",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TraderRowDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "economy"
+        ]
+      }
+    },
+    "/leaderboards/voters": {
+      "get": {
+        "description": "Average vote score over markets scored; tier 0 and voters below the configured minimum are excluded.",
+        "operationId": "leaderboard_voters",
+        "parameters": [
+          {
+            "description": "UTC lookback days, default 7",
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Row limit, default 10",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/VoterRowDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "economy"
+        ]
+      }
+    },
+    "/markets": {
+      "get": {
+        "operationId": "list_markets",
+        "parameters": [
+          {
+            "description": "Filter by lifecycle status, e.g. live",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MarketSummaryDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "markets"
+        ]
+      }
+    },
+    "/markets/{id_or_slug}": {
+      "get": {
+        "operationId": "get_market",
+        "parameters": [
+          {
+            "description": "Market UUID or slug",
+            "in": "path",
+            "name": "id_or_slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketSummaryDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "markets"
+        ]
+      }
+    },
+    "/markets/{id_or_slug}/comments": {
+      "get": {
+        "operationId": "list_comments",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentPageDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "social"
+        ]
+      }
+    },
+    "/markets/{id}/chart": {
+      "get": {
+        "operationId": "market_chart",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Bucket width in seconds",
+            "in": "query",
+            "name": "bucket",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "RFC3339 inclusive start",
+            "in": "query",
+            "name": "since",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PricePointDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "markets"
+        ]
+      }
+    },
+    "/markets/{id}/comments": {
+      "post": {
+        "operationId": "post_comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostCommentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "social"
+        ]
+      }
+    },
+    "/markets/{id}/holders": {
+      "get": {
+        "operationId": "market_holders",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoldersDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "social"
+        ]
+      }
+    },
+    "/markets/{id}/tape": {
+      "get": {
+        "operationId": "market_tape",
+        "parameters": [
+          {
+            "description": "Market id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Newest rows, clamped to 200",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TapeRowDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "markets"
+        ]
+      }
+    },
+    "/trades": {
+      "post": {
+        "operationId": "place_trade",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaceTradeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradeReceiptDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "423": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "trades"
+        ]
+      }
+    },
+    "/trades/preview": {
+      "post": {
+        "operationId": "preview_trade",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreviewTradeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradePreviewDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "trades"
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "operationId": "create_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserIdDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/by-channel": {
+      "get": {
+        "operationId": "user_by_channel",
+        "parameters": [
+          {
+            "description": "e.g. imessage",
+            "in": "query",
+            "name": "channel",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "phone E.164",
+            "in": "query",
+            "name": "address",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserIdDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/{id}/notifications": {
+      "get": {
+        "operationId": "list_notifications",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationPageDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/users/{id}/notifications/read": {
+      "post": {
+        "operationId": "mark_notifications_read",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkNotificationsReadRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdatedDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/users/{id}/notifications/unread_count": {
+      "get": {
+        "operationId": "notification_unread_count",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnreadCountDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/users/{id}/positions": {
+      "get": {
+        "operationId": "user_positions",
+        "parameters": [
+          {
+            "description": "User id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PositionDto"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/{id}/profile": {
+      "get": {
+        "operationId": "user_profile",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/{user_id}/share_card/{market_id}": {
+      "get": {
+        "operationId": "share_card",
+        "parameters": [
+          {
+            "description": "user",
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "market",
+            "in": "path",
+            "name": "market_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "share-card SVG (post-resolution only)"
+          },
+          "404": {
+            "description": "unknown market/user or no participation"
+          },
+          "409": {
+            "description": "market not resolved yet"
+          }
+        },
+        "tags": [
+          "video"
+        ]
+      }
+    },
+    "/votes": {
+      "post": {
+        "operationId": "cast_vote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CastVoteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoteReceiptDto"
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          },
+          "423": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "votes"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "description": "Liveness",
+      "name": "health"
+    },
+    {
+      "description": "Market reads",
+      "name": "markets"
+    },
+    {
+      "description": "Preview + place trades",
+      "name": "trades"
+    },
+    {
+      "description": "Cast votes",
+      "name": "votes"
+    },
+    {
+      "description": "Positions + identity",
+      "name": "users"
+    },
+    {
+      "description": "Settled leaderboards",
+      "name": "economy"
+    },
+    {
+      "description": "Comments and committed-capital holders",
+      "name": "social"
+    },
+    {
+      "description": "Scoped in-app notifications",
+      "name": "notifications"
+    },
+    {
+      "description": "Curator stand-in",
+      "name": "admin"
+    },
+    {
+      "description": "Curator draft pipeline",
+      "name": "content"
+    },
+    {
+      "description": "Rendered market assets",
+      "name": "video"
+    },
+    {
+      "description": "Phase 6 control plane (RBAC-gated; W1/W2 land the behavior)",
+      "name": "ops"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+site_name: Opinions — How It Works
+site_description: A plain-language guide to the Opinions opinion market, written for people who have never built software.
+docs_dir: docs-site
+site_dir: var/site
+use_directory_urls: true
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: pink
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: pink
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - search.highlight
+    - search.suggest
+
+# Every internal link and heading anchor must resolve; `mkdocs build --strict`
+# turns each of these warnings into a build failure.
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Start here:
+      - What this project is: index.md
+      - How the market works: start-here/how-the-market-works.md
+      - Scoring and reputation: start-here/scoring-and-reputation.md
+      - A day in the life: start-here/a-day-in-the-life.md
+      - Glossary: start-here/glossary.md
+  - How it is built:
+      - The big picture: build/big-picture.md
+      - Why the code is split up: build/clean-architecture.md
+      - Tour of the codebase: build/codebase-tour.md
+      - Where the data lives: build/the-database.md
+      - The eleven migrations: build/migrations.md
+      - How live updates work: build/live-updates.md
+      - The control plane: build/control-plane.md
+      - The website and the iMessage bot: build/frontends.md
+  - Following the money:
+      - The ledger: money/ledger.md
+      - Prices and fees: money/fees-and-pricing.md
+      - Rules that can never break: money/invariants.md
+      - Deposits and withdrawals: money/deposits-and-withdrawals.md
+      - The fifteen withdrawal states: money/withdrawal-states.md
+      - Keeping it legal and safe: money/compliance.md
+  - Watch it happen:
+      - Placing a trade: walkthroughs/trade.md
+      - Casting a vote: walkthroughs/vote.md
+      - Getting paid: walkthroughs/payout.md
+  - Running it yourself:
+      - Set it up locally: running/local-setup.md
+      - Tests and quality gates: running/tests-and-gates.md
+      - The swarm: running/the-swarm.md
+      - How this was built: running/how-this-was-built.md

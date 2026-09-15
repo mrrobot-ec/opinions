@@ -1,0 +1,7 @@
+1. VERIFIED — The contract suites now accept `&S` with `S: Store + ?Sized`, open transactions through `Store`, use role-trait borrows, and consume `Box<dyn *Tx>` through `Committable`; this avoids the invalid boxed-future lifetime bound and is conceptually compilable on the pinned toolchain.
+2. VERIFIED — PlaceTrade and CastVote now specify `serialize_key` before replay lookup, acquire the market row lock before reading the clock and enforcing cutoff/state, and treat a post-guard `DuplicateKey` as an invariant failure rather than attempting recovery in an aborted transaction.
+3. VERIFIED — `Store::bootstrap_tx`, `BootstrapTx`, `OwnerRef::MarketPool`, and `MarketWriter::create_pool` make genesis/user/pool creation representable, while SeedMarket has the single `Scheduled` postcondition and `seed.rs` alone advances it with `GoLive`.
+4. VERIFIED — AdvanceMarket explicitly admits only `Approve`, `GoLive`, `EnterCloseWindow`, `Close`, and `StartIntegritySweep`; `Resolve`, `Pay`, and both void events return `UseResolveMarket`, preserving settlement atomicity.
+5. REGRESSED — The owner-shape CHECK, D21 ADR, exact generator pin requirement, project-scoped invocation, and coverage recipe wiring landed, but CI specifies `uv sync --project services/converse` even though the generator is placed in the optional `dev` extra (it needs `--extra dev`), and Task 1.5 still redundantly assigns the pin to itself.
+
+ADDENDUM VERDICT: fix-first

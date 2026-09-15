@@ -1,0 +1,8 @@
+target/
+target-cov-task-c7/
+artifacts/
+.env
+__pycache__/
+.venv/
+*.pyc
+node_modules/

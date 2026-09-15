@@ -1,0 +1,8 @@
+1. Pending expiry sweep + advisory-lock transaction + tests — VERIFIED: Task 7 now sweeps expired unconsumed rows inside the per-thread transaction before consume/create, and Task 8 requires expiry plus two-connection consume/preview race tests under `pg_advisory_xact_lock`.
+2. Sell drain tests — REGRESSED: the original oversized test now accepts `InputTooLarge`, but for the new in-cap vector the raw root is `c = no = 1_000` and the documented invariant guard decrements it to `999`, so a Task-3-compliant implementation returns a valid quote rather than `DrainsPool`; remove this impossible post-guard assertion or explicitly define a pre-guard near-drain rejection policy.
+3. Neutral void redemption — VERIFIED: Task 4, spec §§3.4/4.2, and D21 consistently make void a current-state 50¢/50¢ escrow settlement through Task 6, while historical replay is explicitly a fallible admin clawback tool rather than the void path.
+4. Persistent ledger constraints — VERIFIED: Task 7 adds the one-External-per-currency partial unique index and makes per-`(txn_id, currency)` balance plus zero-entry-header rejection blocking requirements for the deferred Phase-1 trigger.
+5. Mutation-gate fixtures + CI recipe + pins — VERIFIED: Task 0 names all four fixtures, specifies their expected exits, runs them through `gate-test` in `just ci`, and requires exact patch/compiler pins to be selected and recorded at implementation.
+6. Regression sweep — VERIFIED: the plan now has one `MarketState` enum with `Voided`, includes `Resolved -> Voided` for admin action, adds `POOL_RESERVES.market_id` and both composite FKs to the ER contract, and consistently states unpartitioned retention in the ER/open-risk text.
+
+ADDENDUM VERDICT: fix-first

@@ -1,0 +1,7 @@
+   Compiling adapters v0.1.0 (/Users/mrrobot/Documents/personal/opinions/crates/adapters)
+   Compiling main v0.1.0 (/Users/mrrobot/Documents/personal/opinions/crates/main)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 9.90s
+     Running `target/debug/main`
+core listening on 127.0.0.1:8080
+scheduler report: SweepReport { advanced: 1, resolved: 0, curator_needed: 0, held: 0, swept_pass: 0, swept_flag: 0, errors: [] }
+scheduler report: SweepReport { advanced: 1, resolved: 1, curator_needed: 0, held: 0, swept_pass: 0, swept_flag: 0, errors: [] }

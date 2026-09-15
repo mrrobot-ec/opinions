@@ -1,0 +1,10 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running `target/debug/main --seed-demo`
+genesis_txn=55938f66-5db1-4bbb-b68d-ad9befd82c24 replayed=true
+user_id=f42d3748-820e-4b86-b9f0-65746be5ce0b
+market_id=dcc0b125-cb12-5189-8a08-dff0fce68a67 replayed=true
+slug=demo-coffee
+closes_at=2026-08-16 7:18:05.945437 +00:00:00
+tally_hidden_at=2026-08-16 7:08:05.945437 +00:00:00
+deposit_id=664698e4-d586-4262-a6e8-0c80d8f305b5 replayed=true
+Error: money mutation forbidden: geo

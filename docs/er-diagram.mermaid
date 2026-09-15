@@ -1,0 +1,243 @@
+erDiagram
+    USERS ||--o{ WALLETS : "owns deposit address"
+    USERS ||--|| REPUTATION : has
+    USERS ||--o{ TRADES : places
+    USERS ||--o{ VOTES : casts
+    USERS ||--o{ POSITIONS : holds
+    USERS ||--o{ COMMENTS : writes
+    USERS ||--o{ NOTIFICATIONS : receives
+    USERS ||--o{ DEPOSITS : funds
+    USERS ||--o{ WITHDRAWALS : requests
+    USERS ||--o{ AGENT_RUNS : "converses via"
+
+    MARKETS ||--|{ OUTCOMES : "offers (2+ rows, unique(market_id,idx))"
+    MARKETS ||--|| POOLS : "priced by"
+    MARKETS ||--o{ VOTES : "resolved by"
+    MARKETS ||--o{ COMMENTS : hosts
+    MARKETS ||--o{ VIDEO_JOBS : "video from"
+    MARKETS ||--o{ TRADES : "trades within"
+
+    POOLS ||--|{ POOL_RESERVES : holds
+    OUTCOMES ||--|| POOL_RESERVES : "reserve per outcome"
+    OUTCOMES ||--o{ TRADES : "traded as"
+    OUTCOMES ||--o{ POSITIONS : "held as"
+    OUTCOMES ||--o{ VOTES : "chosen in"
+
+    VOTES ||--o| VOTE_SCORES : "scored at resolve"
+
+    LEDGER_TRANSACTIONS ||--|{ LEDGER_ENTRIES : "entries sum to 0"
+    LEDGER_ACCOUNTS ||--o{ LEDGER_ENTRIES : records
+    TRADES }o--|| LEDGER_TRANSACTIONS : "settled by"
+    DEPOSITS }o--|| LEDGER_TRANSACTIONS : "credited by"
+    WITHDRAWALS }o--|| LEDGER_TRANSACTIONS : "debited by"
+
+    COMMENTS ||--o{ COMMENT_VOTES : receives
+    COMMENTS ||--o{ COMMENTS : "replies to (parent_id)"
+
+    AGENT_RUNS ||--|{ AGENT_STEPS : records
+    AGENT_RUNS ||--o{ PENDING_ACTIONS : proposes
+    PENDING_ACTIONS |o--o| TRADES : "consumed by (causal chain)"
+    PENDING_ACTIONS |o--o| VOTES : "consumed by (causal chain)"
+
+    USERS {
+        uuid id PK
+        text handle UK
+        int kyc_tier
+        timestamptz created_at
+    }
+    WALLETS {
+        uuid id PK
+        uuid user_id FK
+        text chain
+        text address UK
+    }
+    REPUTATION {
+        uuid user_id PK
+        bigint rep_micro "fixed-point, no floats"
+        int tier
+        timestamptz updated_at
+    }
+    LEDGER_ACCOUNTS {
+        uuid id PK
+        text owner_type "user|pool|fees|house|escrow|external"
+        uuid owner_id
+        text currency "usdc|usdc_credit; unique partial idx: one external per currency"
+    }
+    LEDGER_TRANSACTIONS {
+        uuid id PK
+        text kind "deposit|trade|payout|withdrawal|seed|reversal|credit_grant|credit_convert"
+        text idempotency_key UK
+        timestamptz created_at
+    }
+    LEDGER_ENTRIES {
+        bigint id PK
+        uuid txn_id FK
+        uuid account_id FK
+        bigint amount_micro "signed; append-only; internal accounts never negative, external contra may be"
+    }
+    MARKETS {
+        uuid id PK
+        text slug UK
+        text question
+        text status "draft..resolved,paid,voided"
+        bigint vote_seq_counter "locked allocation for public vote numbers"
+        int min_votes_to_resolve "check > 0; auto-void only with D21 OI-floor rules"
+        timestamptz opens_at
+        timestamptz closes_at
+        timestamptz tally_hidden_at "ALL trading frozen from here (D22)"
+    }
+    OUTCOMES {
+        uuid id PK
+        uuid market_id FK "unique(market_id,idx)"
+        text label
+        int idx
+        int final_vote_bps "set at resolve"
+        bigint redemption_micro "per share"
+    }
+    POOLS {
+        uuid id PK
+        uuid market_id FK,UK
+        int fee_bps
+        bigint seeded_micro
+    }
+    POOL_RESERVES {
+        uuid pool_id PK,FK
+        uuid outcome_id PK,FK
+        uuid market_id "composite FKs (pool_id,market_id)->pools, (outcome_id,market_id)->outcomes"
+        bigint reserve_micro_shares "check >= 0"
+    }
+    TRADES {
+        uuid id PK
+        uuid user_id FK
+        uuid market_id FK "unique(market_id,seq); composite FK (outcome_id,market_id)"
+        uuid outcome_id FK
+        uuid run_id FK "nullable; agent causal chain"
+        uuid pending_action_id FK "nullable UNIQUE; agent causal chain"
+        uuid txn_id FK "ledger transaction that settled it"
+        text side "buy|sell"
+        bigint collateral_micro
+        bigint shares_micro
+        bigint fee_micro
+        bigint seq "per-market sequence"
+    }
+    POSITIONS {
+        uuid user_id PK,FK
+        uuid outcome_id PK,FK
+        bigint shares_micro "check >= 0"
+        bigint cost_micro
+        bigint realized_pnl_micro
+    }
+    VOTES {
+        uuid id PK
+        uuid user_id FK "UK(user,market)"
+        uuid market_id FK "composite FK (outcome_id,market_id)"
+        uuid outcome_id FK
+        uuid run_id FK "nullable; agent causal chain"
+        uuid pending_action_id FK "nullable UNIQUE; oracle chain parity with trades"
+        int crowd_guess_pct
+        bigint seq "allocated via markets.vote_seq_counter in same txn"
+        text idempotency_key UK "client retry safety"
+    }
+    VOTE_SCORES {
+        uuid vote_id PK,FK
+        int accuracy_bp "integer bps, no floats"
+        int majority_bp
+        int score_bp
+    }
+    COMMENTS {
+        uuid id PK
+        uuid market_id FK
+        uuid user_id FK
+        uuid parent_id FK "nullable self-ref"
+        text body
+        int score "denormalized"
+        text moderation_status
+    }
+    COMMENT_VOTES {
+        uuid comment_id PK,FK
+        uuid user_id PK,FK
+        smallint value "+1|-1"
+    }
+    NOTIFICATIONS {
+        bigint id PK
+        uuid user_id FK
+        text type
+        uuid market_id FK
+        jsonb payload "denormalized at write"
+        timestamptz read_at
+    }
+    DEPOSITS {
+        uuid id PK
+        uuid user_id FK
+        text chain_sig UK "dedupe key"
+        bigint amount_micro
+        text status
+    }
+    WITHDRAWALS {
+        uuid id PK
+        uuid user_id FK
+        text dest_address
+        bigint amount_micro
+        text status "queued|risk_hold|sent|settled"
+        text chain_sig
+    }
+    VIDEO_JOBS {
+        uuid id PK
+        uuid market_id FK
+        text tier "hero|template"
+        text status
+        text asset_url
+    }
+    EVENTS_OUTBOX {
+        bigint seq PK
+        text aggregate_type
+        uuid aggregate_id
+        text event_type
+        jsonb payload
+        timestamptz published_at "null until relayed"
+    }
+    AGENT_RUNS {
+        uuid id PK
+        text thread_id "indexed"
+        text channel
+        text inbound_msg_id "unique(channel,inbound_msg_id) dedupe"
+        text trigger
+        uuid user_id FK
+        text final_intent
+        text status "running|ok|error|guard_blocked"
+        int total_tokens
+        bigint cost_micro
+        text trace_id
+        timestamptz started_at "indexed; unpartitioned + scheduled retention jobs (R2)"
+        timestamptz ended_at
+    }
+    AGENT_STEPS {
+        uuid id PK
+        uuid run_id FK "unique(run_id,seq)"
+        int seq
+        text node
+        text kind "llm|tool|gate"
+        jsonb state_before
+        jsonb state_after
+        text prompt_template_id
+        text prompt_version
+        text rendered_prompt "PII: encrypted, retention-limited"
+        text model
+        jsonb params
+        text raw_output
+        jsonb parsed_output
+        text rationale
+        int tokens_in
+        int tokens_out
+        int latency_ms
+        text error
+    }
+    PENDING_ACTIONS {
+        uuid id PK
+        text thread_id "partial idx where consumed_at null"
+        uuid run_id FK
+        text kind "trade|vote"
+        jsonb payload
+        timestamptz expires_at "2 min TTL"
+        timestamptz consumed_at
+    }

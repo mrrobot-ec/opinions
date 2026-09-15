@@ -1,0 +1,62 @@
+flowchart TD
+    %% LEGEND: 🤖 = LLM agent (own versioned metaprompt, pinned model)
+    %%         ⚙️ = deterministic node (no LLM)
+    %% R1 REVIEW CHANGES: (1) confirm/cancel is a PRE-ROUTER lexical gate on raw text —
+    %% LLM output can never authorize execution. (2) Votes go through the same
+    %% preview→pending→confirm corridor as trades (votes are the resolution oracle).
+    %% (3) Graph runs are single-flight per thread_id (per-thread lock at load_session).
+
+    WH[⚙️ Inbound webhook<br/>Sendblue → FastAPI<br/>dedupe on channel+msg_id] --> LS[⚙️ load_session<br/>phone → user · hydrate state<br/>single-flight lock per thread_id]
+    LS -->|unknown number| OB[⚙️ onboarding<br/>link tester devnet account]
+    OB --> CMP
+
+    LS --> PG{⚙️ PENDING GATE — lexical, pre-router<br/>pending action exists?<br/>normalized raw text vs allowlists}
+    PG -->|no pending| RT
+    PG -->|confirm match:<br/>confirm·yes·y·yep·do it·lock it| CF{⚙️ pending valid + unexpired?<br/>SELECT under thread lock —<br/>consumed only AFTER core 2xx}
+    PG -->|cancel match:<br/>cancel·no·stop·nevermind| CX[⚙️ clear pending]
+    PG -->|empty · tapback · emoji-only| RP[⚙️ re-prompt reply yes or cancel<br/>pending KEPT] --> CMP
+    PG -->|any other substantive text| CX2[⚙️ auto-cancel pending first] --> RT
+
+    CF -->|yes| EX[⚙️ execute pending<br/>trade → POST /trades · vote → POST /votes<br/>idempotency key · run_id chained<br/>⚠ only money/oracle-moving node]
+    CF -->|expired/invalid| NP[⚙️ nothing pending]
+
+    RT{🤖 ROUTER AGENT<br/>intent enum · temp 0<br/>proposes only — never executes}
+
+    %% Read-only tools
+    RT -->|list_markets| T1[⚙️ GET /markets?status=live]
+    RT -->|price · portfolio · balance| T3[⚙️ GET /price · /positions]
+    RT -->|comments| T5[⚙️ GET /comments]
+
+    %% Analyst agent (free-form questions about a market)
+    RT -->|ask_about_market| MA[🤖 MARKET ANALYST AGENT<br/>fetch brief + comments + prices<br/>→ synthesize answer<br/>multi-step, read-only]
+
+    %% Vote corridor — same guarded shape as trades (votes are the oracle)
+    subgraph VOTE[vote_flow — guarded]
+        V0{⚙️ params present?}
+        V0 -->|no side| VQ1[⚙️ ask Yes/No]
+        V0 -->|no crowd %| VQ2[⚙️ ask percentage]
+        V0 -->|complete| VP[⚙️ vote preview<br/>save pending_action kind=vote · 2 min<br/>reply shows side + guess to confirm]
+    end
+    RT -->|vote| VX[🤖 VOTE EXTRACTOR AGENT<br/>side · crowd % · market ref]
+    VX --> V0
+
+    %% Trade corridor
+    subgraph TRADE[trade_flow — guarded]
+        X2[⚙️ POST /trades/preview<br/>CORE computes numbers]
+        X2 --> X3[⚙️ save pending_action kind=trade · 2 min]
+    end
+    RT -->|place_trade · sell| TX[🤖 TRADE EXTRACTOR AGENT<br/>strict JSON: side · amount · market]
+    TX --> X2
+
+    %% Small talk / help
+    RT -->|chitchat · help| ST[🤖 SMALLTALK AGENT<br/>brand voice · no tools]
+
+    %% Converge: persona composer
+    T1 & T3 & T5 & MA & VQ1 & VQ2 & VP & X3 & EX & NP & CX & ST --> CMP[🤖 COMPOSER AGENT<br/>persona metaprompt<br/>numbers INJECTED from state,<br/>never generated · attach video]
+    CMP --> GRD[⚙️ output guard<br/>schema + number match check]
+    GRD --> SND[⚙️ ChannelPort.send]
+    SND --> CK[(⚙️ Postgres checkpointer<br/>thread_id = phone)]
+
+    %% Proactive path: deliberately agent-free
+    EV[[⚙️ market_live event]] --> BC[⚙️ broadcast template<br/>no LLM by design]
+    BC --> SND

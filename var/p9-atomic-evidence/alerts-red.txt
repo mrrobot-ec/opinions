@@ -1,0 +1,18 @@
+test ops::alerts::tests::a_resolved_incident_is_never_redelivered ... ok
+test ops::alerts::tests::a_successful_first_page_records_one_attempt_at_the_supplied_time ... ok
+test ops::alerts::tests::open_incident_is_deduped_until_resolved_then_repages ... ok
+test ops::alerts::tests::insert_if_absent_reports_the_existing_open_incident_and_reopens_after_resolve ... ok
+test ops::alerts::tests::pending_delivery_is_at_least_once_and_missing_ack_is_typed ... ok
+test ops::alerts::tests::an_acked_but_never_paged_incident_stays_pending ... FAILED
+test ops::alerts::tests::a_concurrent_raise_opens_exactly_one_incident_and_pages_once ... FAILED
+test ops::alerts::tests::a_poison_incident_does_not_starve_the_incidents_behind_it ... FAILED
+test ops::alerts::tests::redelivery_stamps_the_supplied_time_and_never_the_unix_epoch ... FAILED
+test ops::alerts::tests::a_failed_first_page_leaves_the_incident_pending_for_redelivery ... FAILED
+failures:
+failures:
+    ops::alerts::tests::a_concurrent_raise_opens_exactly_one_incident_and_pages_once
+    ops::alerts::tests::a_failed_first_page_leaves_the_incident_pending_for_redelivery
+    ops::alerts::tests::a_poison_incident_does_not_starve_the_incidents_behind_it
+    ops::alerts::tests::an_acked_but_never_paged_incident_stays_pending
+    ops::alerts::tests::redelivery_stamps_the_supplied_time_and_never_the_unix_epoch
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 559 filtered out; finished in 0.00s

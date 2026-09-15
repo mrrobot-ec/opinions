@@ -1,0 +1,63 @@
+PROOF A — accepted status space per red-team leg
+(A = leg accepts this status as 'the attack failed' and the run stays green)
+------------------------------------------------------------
+leg                                 200  400  403  404  409  422  423  500  503
+------------------------------------------------------------
+1 wash-after-grant preview            A    A    A    A    A    A    A    A    A
+5 omitted config version              .    A    A    A    A    A    A    A    A
+6 fee override propose                .    A    A    A    A    A    A    A    A
+7 unsigned KYC webhook                .    A    A    A    A    A    A    A    A
+9 dust warm-up + dump                 A    A    A    A    A    A    A    A    A
+10a Hit user -> mule dest             .    A    A    A    A    A    A    A    A
+10b self-excluded -> new dest         .    A    A    A    A    A    A    A    A
+11 settle-then-retry daily cap        .    A    A    A    A    A    A    A    A
+13b unwind racer vs Paid              .    A    A    A    A    A    A    A    A
+14 admit/refund source lock           .    A    A    A    A    A    A    A    A
+------------------------------------------------------------
+Every leg above accepts 404 (route absent) and 503 (hardcoded stub).
+Only leg 5 discriminates at all, and only against 200.
+
+PROOF A2 — statuses actually observed in the last 'PHASE 7 W4 E2E GREEN' run
+------------------------------------------------------------
+6 fee override                 503 (phase7_admin_stubs)                             LEG PASSED
+7 unsigned webhook             404 (kyc_webhook::router never merged)               LEG PASSED
+9 dust withdraw                404 (empty body artifact)                            LEG PASSED
+10a Hit dest                   404 (empty body artifact)                            LEG PASSED
+10b self-excluded              404 (empty body artifact)                            LEG PASSED
+11 daily retry                 404 (empty body artifact)                            LEG PASSED
+13b unwind racer               409 (IllegalTransition, market Paid)                 LEG PASSED
+14 refund propose              404 (empty body artifact)                            LEG PASSED
+------------------------------------------------------------
+Six of eight money/compliance legs 'passed' against an ABSENT route (404).
+One passed against a hardcoded 503 stub. One passed on a lifecycle refusal
+(market already Paid) that has nothing to do with the money path.
+
+PROOF B — null-implementation replay (sqlite3, zero production code)
+------------------------------------------------------------
+GREEN  leg 1  wash-after-grant: converted lots                    got=0 want=0
+GREEN  legs 2-4  unverified-phone referral grant sum              got=0 want=0
+GREEN  legs 2-4  A<->B referral grants                            got=0 want<=1
+GREEN  leg 8  no-KYC observation unadmitted/unbound               got=1 want=1
+GREEN  leg 9  dust dest auto-approved rows                        got=0 want=0
+GREEN  leg 10  freshest sanctions verdict                         got=hit want=hit
+GREEN  leg 12  four $25 deposits open AML flags                   got=0 want=0
+GREEN  leg 13  no residual page before injection                  got=0 want=0
+GREEN  leg 13  injected residual pages                            got=1 want=1
+GREEN  leg 13  recurrence dedups inside open incident             got=1 want=1
+GREEN  leg 13  in-flight exposure not paged as drift              got=0 want=0
+------------------------------------------------------------
+Null-implementation replay: 11 leg assertions GREEN, 0 RED.
+referral_binds counter echoed by the script's final GREEN line: 0
+
+PROOF C — migrations/0011_money.sql:162-170 CHECK vs the script's own fixtures
+------------------------------------------------------------
+Error: stepping, CHECK constraint failed: deposits_observation_identity (19)
+line 846 partial observation rows inserted: 0 (script expects rejection => 0)
+line 851 'complete' observation rows inserted: 0 (script assumes 1)
+line 851 error: Error: stepping, CHECK constraint failed: deposits_observation_identity (19)
+------------------------------------------------------------
+The script's own leg-8 fixture omits rail_fingerprint, which the CHECK
+requires. Under 'sql()' + ON_ERROR_STOP=1 + 'set -e' with no '|| true',
+line 851 aborts the entire run before any assertion after it.
+
+Artifacts: /Users/mrrobot/Documents/personal/opinions/var/p9-smoke-refutation-nullimpl.sqlite, /Users/mrrobot/Documents/personal/opinions/var/p9-smoke-refutation-check.sqlite

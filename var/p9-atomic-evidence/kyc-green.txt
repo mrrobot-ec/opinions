@@ -1,0 +1,9 @@
+test money::kyc::tests::tiers_and_meets ... ok
+test money::kyc::tests::progresses_requires_fresh_clear_and_tier ... ok
+test money::kyc::tests::verdict_covers_clear_hit_indeterminate ... ok
+test money::kyc::tests::an_unresolved_user_is_refused_before_any_write ... ok
+test money::kyc::tests::persist_and_sandbox_complete_round_trip ... ok
+test money::kyc::tests::a_replayed_delivery_applies_nothing_twice ... ok
+test money::kyc::tests::a_same_key_different_hash_delivery_is_a_typed_conflict_that_applies_nothing ... ok
+test money::kyc::tests::a_failed_kyc_effect_leaves_no_acceptance_so_the_retry_still_applies ... ok
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 569 filtered out; finished in 0.00s
