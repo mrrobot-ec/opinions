@@ -1,0 +1,1849 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A plain-language guide to the Opinions opinion market, written for people who have never built software.">
+      
+      
+      
+      
+        <link rel="prev" href="../live-updates/">
+      
+      
+        <link rel="next" href="../frontends/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>The control plane - Opinions — How It Works</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-control-plane" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Opinions — How It Works" class="md-header__button md-logo" aria-label="Opinions — How It Works" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Opinions — How It Works
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The control plane
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Opinions — How It Works" class="md-nav__button md-logo" aria-label="Opinions — How It Works" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Opinions — How It Works
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Start here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What this project is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/how-the-market-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How the market works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/scoring-and-reputation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scoring and reputation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/a-day-in-the-life/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A day in the life
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it is built
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How it is built
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../big-picture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The big picture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clean-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why the code is split up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codebase-tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour of the codebase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../the-database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Where the data lives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The eleven migrations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../live-updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How live updates work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The control plane
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The control plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#four-questions-per-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Four questions per setting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-published-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The published catalog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-a-change-propagates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How a change propagates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pauses-and-the-honesty-rules-around-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pauses, and the honesty rules around them
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dual-control-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dual control, in detail
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../frontends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The website and the iMessage bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Following the money
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Following the money
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/ledger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The ledger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/fees-and-pricing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prices and fees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/invariants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules that can never break
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/deposits-and-withdrawals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deposits and withdrawals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/withdrawal-states/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The fifteen withdrawal states
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/compliance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keeping it legal and safe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Watch it happen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Watch it happen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/trade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Placing a trade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/vote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Casting a vote
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/payout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting paid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running it yourself
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Running it yourself
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Set it up locally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/tests-and-gates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests and quality gates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/the-swarm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The swarm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/how-this-was-built/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How this was built
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#four-questions-per-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Four questions per setting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-published-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The published catalog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-a-change-propagates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How a change propagates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pauses-and-the-honesty-rules-around-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pauses, and the honesty rules around them
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dual-control-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dual control, in detail
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="the-control-plane">The control plane<a class="headerlink" href="#the-control-plane" title="Permanent link">&para;</a></h1>
+<p>Every tunable number in this system — the fee, the position caps, the anti-fraud
+thresholds, the kill switches — lives in a database table rather than in the code. This
+page explains how a change reaches a running trade, and the four questions the design
+insists on answering about every single setting.</p>
+<h2 id="four-questions-per-setting">Four questions per setting<a class="headerlink" href="#four-questions-per-setting" title="Permanent link">&para;</a></h2>
+<p>There is one catalog, in <code>crates/application/src/ops/config.rs</code>, and every entry in it
+carries four attributes. A key that does not exist in the catalog cannot be written at all.</p>
+<p><strong>1. What are its legal values?</strong> Every key has a validation function with real bounds. The
+fee must be between 10 and 200 basis points. The vote-velocity threshold must stay inside
+±50% of its published value. Integrity thresholds must stay inside ±20% of the <em>shipped
+default</em> — deliberately anchored to the original rather than to the current value, so
+repeated small changes cannot walk a threshold anywhere over time.</p>
+<p><strong>2. Who may change it?</strong> One of four roles: <code>curator</code>, <code>ops</code>, <code>finance</code>, <code>superadmin</code>.
+Superadmin may act for any listed role; nobody else may act outside their own.</p>
+<p><strong>3. How is it changed?</strong> <em>Direct</em> means one authorised person applies it. <em>Two-phase</em>
+means one principal proposes and a <strong>different token id</strong> confirms. Anything touching
+money economics is two-phase.</p>
+<p><strong>4. When does it take effect?</strong> This is the attribute people forget, and it is the one
+that prevents the worst abuses:</p>
+<table>
+<thead>
+<tr>
+<th>Apply class</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Immediate global</strong></td>
+<td>Visible at the next trade's fence point, everywhere</td>
+<td><code>trading_paused</code>, feature flags</td>
+</tr>
+<tr>
+<td><strong>Next trade</strong></td>
+<td>Read when the next trade computes its fee or cap</td>
+<td><code>min_fee_bps</code>, the tier discounts</td>
+</tr>
+<tr>
+<td><strong>New market only</strong></td>
+<td>Applies to markets created after the change; an open book never reprices</td>
+<td><code>trade_fee_bps</code>, the pool seeds</td>
+</tr>
+<tr>
+<td><strong>Live immutable</strong></td>
+<td>Stamped onto a market at creation and never moved afterwards</td>
+<td><code>hidden_window_secs</code>, <code>min_votes_to_resolve_floor</code></td>
+</tr>
+</tbody>
+</table>
+<p>The last two are the interesting ones. They are what stops an operator from changing the
+rules of a game already in progress. You cannot reprice a market people are already
+trading in, and you cannot move the blackout window on a market that is already running.</p>
+<h2 id="the-published-catalog">The published catalog<a class="headerlink" href="#the-published-catalog" title="Permanent link">&para;</a></h2>
+<p>These are the values migration <code>0008</code> seeds as generation 1, and the operator
+documentation publishes them alongside their bounds. This is a representative selection;
+the full table is in <code>docs/copy/ops.md</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th style="text-align: right;">Seeded value</th>
+<th>Bounds</th>
+<th>Who</th>
+<th>How</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trade_fee_bps</code></td>
+<td style="text-align: right;">100</td>
+<td>10–200 bp</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>new markets</td>
+</tr>
+<tr>
+<td><code>min_fee_bps</code></td>
+<td style="text-align: right;">10</td>
+<td>0–50 bp</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>next trade</td>
+</tr>
+<tr>
+<td><code>fee_discount_bp_by_tier</code></td>
+<td style="text-align: right;"><code>[0,0,10,20,30]</code></td>
+<td>monotone, each ≤ the fee</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>next trade</td>
+</tr>
+<tr>
+<td><code>position_cap_micro_by_tier</code></td>
+<td style="text-align: right;"><code>[$25,$50,$100,$250,$500]</code></td>
+<td>monotone, never below the published floors</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>next trade</td>
+</tr>
+<tr>
+<td><code>rep_tier_thresholds_micro</code></td>
+<td style="text-align: right;"><code>[0,0.2,0.4,0.6,0.8]</code></td>
+<td>five monotone entries</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>next trade</td>
+</tr>
+<tr>
+<td><code>discount_flip_window_secs</code></td>
+<td style="text-align: right;">3,600</td>
+<td>600–86,400 s</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>next trade</td>
+</tr>
+<tr>
+<td><code>hidden_window_secs</code></td>
+<td style="text-align: right;">300</td>
+<td>60–900 s, less than the market's life</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>live-immutable</td>
+</tr>
+<tr>
+<td><code>min_votes_to_resolve_floor</code></td>
+<td style="text-align: right;">3</td>
+<td>at least 3</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>live-immutable</td>
+</tr>
+<tr>
+<td><code>oi_floor_micro</code></td>
+<td style="text-align: right;">0</td>
+<td>0–$1,000</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>live-immutable</td>
+</tr>
+<tr>
+<td><code>payout_hold_threshold_micro</code></td>
+<td style="text-align: right;">$500</td>
+<td>$1–$10,000</td>
+<td>Finance</td>
+<td>two-phase</td>
+<td>live-immutable</td>
+</tr>
+<tr>
+<td><code>max_votes_per_window</code></td>
+<td style="text-align: right;">30</td>
+<td>±50% band</td>
+<td>Ops</td>
+<td>two-phase</td>
+<td>immediate</td>
+</tr>
+<tr>
+<td><code>integrity_young_share_max_ppm</code></td>
+<td style="text-align: right;">500,000</td>
+<td>±20% of the shipped default</td>
+<td>Superadmin</td>
+<td>two-phase</td>
+<td>immediate</td>
+</tr>
+<tr>
+<td><code>trading_paused</code></td>
+<td style="text-align: right;"><code>false</code></td>
+<td>boolean</td>
+<td>Ops</td>
+<td>direct</td>
+<td>immediate</td>
+</tr>
+<tr>
+<td><code>market_paused:{uuid}</code></td>
+<td style="text-align: right;">unset</td>
+<td>boolean</td>
+<td>Ops</td>
+<td>direct</td>
+<td>immediate</td>
+</tr>
+<tr>
+<td><code>voting_paused:{uuid}</code></td>
+<td style="text-align: right;">unset</td>
+<td>boolean</td>
+<td>Superadmin</td>
+<td>two-phase</td>
+<td>immediate</td>
+</tr>
+<tr>
+<td><code>proposal_ttl_secs</code></td>
+<td style="text-align: right;">900</td>
+<td>60–3,600 s</td>
+<td>Superadmin</td>
+<td>two-phase</td>
+<td>immediate</td>
+</tr>
+<tr>
+<td><code>dual_control_delay_secs</code></td>
+<td style="text-align: right;">60</td>
+<td>0–86,400 s</td>
+<td>Superadmin</td>
+<td>two-phase</td>
+<td>immediate</td>
+</tr>
+</tbody>
+</table>
+<p>Notice the change-rate limits, which are separate from the bounds. The fee may move at
+most 20 bp per apply; each tier discount at most 10 bp per apply; seeds and budgets at most
+double or halve. A key can be legal to set to a value and still illegal to <em>jump</em> to it.</p>
+<div class="admonition warning">
+<p class="admonition-title">The catalog and the running process are two different things</p>
+<p>The catalog above is the operator-facing configuration store: validated, versioned,
+audited, and consulted at trade time for staleness. But some of the same numbers also
+exist as process-level settings that <code>main</code> reads from environment variables at
+startup — and the built-in defaults there are permissive (no tier discount, no position
+cap). A server started with none of those variables set will not apply the published
+tier policy. Treat the table above as the documented, intended policy rather than as a
+description of what a bare <code>cargo run</code> enforces.</p>
+</div>
+<h2 id="how-a-change-propagates">How a change propagates<a class="headerlink" href="#how-a-change-propagates" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant A as Admin
+    participant SC as SetConfig / proposal confirm
+    participant DB as PostgreSQL
+    participant RC as Reconciler loop
+    participant PT as PlaceTrade
+
+    A-&gt;&gt;SC: patch (one or more keys)
+    SC-&gt;&gt;SC: validate the whole prospective snapshot
+    SC-&gt;&gt;DB: take exclusive fences on the affected keys
+    SC-&gt;&gt;DB: write a new generation row + one change row per key
+    SC-&gt;&gt;DB: write an audit fact + an outbox event
+    SC-&gt;&gt;DB: COMMIT
+    DB--&gt;&gt;RC: outbox event (a wake-up only)
+    RC-&gt;&gt;DB: read the authoritative generation
+    RC-&gt;&gt;RC: replace the whole snapshot at once
+    PT-&gt;&gt;DB: take shared fences, read values, check staleness</code></pre>
+<p>Four things in that diagram do real work:</p>
+<p><strong>Validation is on the whole prospective snapshot, not the patch.</strong> If you change the base
+fee and the discount vector together, the check runs against the combined result. A patch
+that would leave the configuration internally inconsistent is rejected as a whole; there is
+no partial application.</p>
+<p><strong>Fences are locks.</strong> A configuration change takes an exclusive lock on the keys it
+touches; a trade takes a shared lock on the ones it reads. They cannot interleave. This is
+the mechanism behind "a kill switch that can be raced is not a kill switch": a trade that
+was queued waiting for a row lock takes its fence when it wakes, and sees the pause.</p>
+<p><strong>The event is a wake-up, not the data.</strong> The reconciler never trusts the event's payload —
+it re-reads the authoritative generation from the database and swaps its snapshot in one
+piece. A missed event costs a little latency, because a heal tick reloads periodically
+anyway; it never costs correctness.</p>
+<p><strong>Every change is its own audit row.</strong> <code>config_changes</code> records the old value, the new
+value, the generation, and who did it, for every key. That is also what the emergency
+revert reads: rather than typing values back in from memory, an operator can propose a
+revert <em>of a generation</em>, pre-filled from history.</p>
+<h2 id="pauses-and-the-honesty-rules-around-them">Pauses, and the honesty rules around them<a class="headerlink" href="#pauses-and-the-honesty-rules-around-them" title="Permanent link">&para;</a></h2>
+<p>There are three pause switches, and the rules around them are unusually explicit because a
+pause is the most tempting thing in the system to abuse.</p>
+<ul>
+<li><strong>Trading pause</strong> — global or per market. Stops new trades. Does <strong>not</strong> stop votes.</li>
+<li><strong>Voting pause</strong> — per market, and it stops both votes and trades while active. It
+  requires superadmin and two-phase approval, because pausing the oracle is the most
+  dangerous button here.</li>
+<li>The voting pause <strong>cannot be set inside the hidden-tally window, and expires
+  automatically when that window begins.</strong> This closes a specific manipulation: without it,
+  an operator could freeze voting just as the tally went dark and hold the final public
+  number in place. No admin action is required to lift it; the market's own timestamp does.</li>
+</ul>
+<p>The operator documentation states the boundary in plain terms: a pause is not a
+configuration hatch. It cannot move a live market's close time, its hidden-tally timestamp,
+its fee, its participation threshold, or any other stamped economics. An emergency revert
+that would only touch pause keys is rejected outright.</p>
+<h2 id="dual-control-in-detail">Dual control, in detail<a class="headerlink" href="#dual-control-in-detail" title="Permanent link">&para;</a></h2>
+<p>Anything that moves money by hand requires two different people. The list includes: large
+withdrawals, manual credit grants, unwinding a market, remedial credits, receivable
+write-offs, banning and unbanning a user, clearing an anti-money-laundering flag, lifting a
+self-exclusion, and changing a live market's fee.</p>
+<p>Each is a durable <strong>proposal</strong> row carrying:</p>
+<ul>
+<li>an immutable fingerprint of exactly what was proposed, so the confirmation cannot
+  approve something subtly different;</li>
+<li>a <strong>minimum delay</strong> before it may be confirmed — 60 seconds for ordinary dual-controlled
+  actions, 15 minutes to ban a user, and 24 hours to release the funds of a frozen account;</li>
+<li>an <strong>expiry</strong>, seeded at 15 minutes;</li>
+<li><strong>two separate audit facts</strong>, one for the proposal and one for the confirmation;</li>
+<li>a database check that the confirmer's token id differs from the proposer's.</li>
+</ul>
+<p>That last point matters more than it looks. The two-person rule is enforced by the
+<em>schema</em>, not only by the code that writes to it.</p>
+<p>A confirmer arriving late — after the effect already committed — reads back the existing
+result instead of producing a second one. And at most one pending proposal may exist per
+subject and kind, so two admins cannot open competing proposals against the same thing.</p>
+<div class="admonition note">
+<p class="admonition-title">How narrow 'a different person' is</p>
+<p>The project is deliberately explicit that its notion of who is linked to whom is thin.
+An account counts as linked to an admin principal only when the user's handle exactly
+equals that principal's stored token digest. That is stated as a known bound rather
+than dressed up as an identity graph — the kind of honesty that is easy to skip and
+expensive to discover later.</p>
+</div>
+<h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../money/compliance/">Keeping it legal and safe</a> — the rules these controls administer.</li>
+<li><a href="../../walkthroughs/trade/">Placing a trade</a> — where the fences are taken.</li>
+<li><a href="../live-updates/">How live updates work</a> — how a pause reaches a browser.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "toc.follow", "content.code.copy", "search.highlight", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

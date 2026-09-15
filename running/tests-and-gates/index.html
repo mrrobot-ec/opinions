@@ -1,0 +1,1786 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A plain-language guide to the Opinions opinion market, written for people who have never built software.">
+      
+      
+      
+      
+        <link rel="prev" href="../local-setup/">
+      
+      
+        <link rel="next" href="../the-swarm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Tests and quality gates - Opinions — How It Works</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tests-and-quality-gates" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Opinions — How It Works" class="md-header__button md-logo" aria-label="Opinions — How It Works" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Opinions — How It Works
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tests and quality gates
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Opinions — How It Works" class="md-nav__button md-logo" aria-label="Opinions — How It Works" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Opinions — How It Works
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Start here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What this project is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/how-the-market-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How the market works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/scoring-and-reputation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scoring and reputation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/a-day-in-the-life/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A day in the life
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it is built
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How it is built
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/big-picture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The big picture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/clean-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why the code is split up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/codebase-tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour of the codebase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/the-database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Where the data lives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The eleven migrations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/live-updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How live updates work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/control-plane/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The control plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/frontends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The website and the iMessage bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Following the money
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Following the money
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/ledger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The ledger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/fees-and-pricing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prices and fees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/invariants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules that can never break
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/deposits-and-withdrawals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deposits and withdrawals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/withdrawal-states/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The fifteen withdrawal states
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../money/compliance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keeping it legal and safe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Watch it happen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Watch it happen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/trade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Placing a trade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/vote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Casting a vote
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/payout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting paid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running it yourself
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Running it yourself
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Set it up locally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests and quality gates
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests and quality gates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The gates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-100-coverage-with-no-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why 100% coverage, with no exceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mutation-gate-and-the-gate-on-the-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The mutation gate, and the gate on the gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kinds-of-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The kinds of tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#red-team-tests-the-ones-that-must-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Red-team tests: the ones that must fail
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-level-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service-level targets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-frozen-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The frozen manifest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../the-swarm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The swarm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-this-was-built/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How this was built
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The gates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-100-coverage-with-no-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why 100% coverage, with no exceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mutation-gate-and-the-gate-on-the-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The mutation gate, and the gate on the gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kinds-of-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The kinds of tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#red-team-tests-the-ones-that-must-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Red-team tests: the ones that must fail
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-level-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service-level targets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-frozen-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The frozen manifest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tests-and-quality-gates">Tests and quality gates<a class="headerlink" href="#tests-and-quality-gates" title="Permanent link">&para;</a></h1>
+<p>This project is unusually strict about verification. This page explains each gate, what it
+protects, and why the bar is set where it is.</p>
+<h2 id="the-gates">The gates<a class="headerlink" href="#the-gates" title="Permanent link">&para;</a></h2>
+<p><code>just ci</code> runs all of them:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ci: fmt clippy test coverage deny audit gate-test deps-check
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Checks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cargo fmt --all --check</code></td>
+<td>Formatting is uniform. Removes style arguments entirely.</td>
+</tr>
+<tr>
+<td><code>cargo clippy --workspace --all-targets -- -D warnings</code></td>
+<td>Rust's linter, with <strong>every warning treated as an error</strong>, across every target including tests.</td>
+</tr>
+<tr>
+<td><code>just test</code></td>
+<td>The whole test suite, serialised so the database-backed tests do not collide. The last recorded full run was 1,027 tests across 23 binaries.</td>
+</tr>
+<tr>
+<td><code>just coverage</code></td>
+<td><strong>100% line coverage</strong> on four packages, with <strong>zero exclusions</strong>.</td>
+</tr>
+<tr>
+<td><code>cargo deny check</code></td>
+<td>Dependency licences and advisories.</td>
+</tr>
+<tr>
+<td><code>cargo audit</code></td>
+<td>Known vulnerabilities in dependencies.</td>
+</tr>
+<tr>
+<td><code>just gate-test</code></td>
+<td>Tests the mutation gate itself — see below.</td>
+</tr>
+<tr>
+<td><code>just deps-check</code></td>
+<td>The layering rule, the frozen manifest, the no-database-types-in-application rule, and the confinement of HTTP clients to three audited files.</td>
+</tr>
+</tbody>
+</table>
+<p>Not in <code>just ci</code>, but part of the release bar:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Checks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>just mutants</code></td>
+<td>At least 90% of deliberately introduced bugs in the domain are caught by tests.</td>
+</tr>
+<tr>
+<td><code>scripts/e2e_swarm_smoke.sh</code></td>
+<td>The full end-to-end run against a live server and database.</td>
+</tr>
+<tr>
+<td><code>just branch-coverage</code></td>
+<td>Branch coverage on the domain, on a nightly toolchain — reviewed, not gating.</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart LR
+    F["fmt"] --&gt; C["clippy&lt;br/&gt;-D warnings"] --&gt; T["test"] --&gt; V["coverage&lt;br/&gt;100%, no exclusions"] --&gt; D["deny + audit&lt;br/&gt;licences, advisories"] --&gt; G["gate-test&lt;br/&gt;tests the gate itself"] --&gt; A["deps-check&lt;br/&gt;layering + frozen manifest"]
+    A --&gt; R{"release?"}
+    R --&gt; M["mutants&lt;br/&gt;90% kill on the domain"]
+    R --&gt; S["swarm smoke&lt;br/&gt;e2e + timing"]</code></pre>
+<p>The lint configuration is worth reading on its own. Workspace-wide, the project <strong>forbids</strong>
+unsafe code and <strong>denies</strong> <code>unwrap</code>, <code>expect</code>, <code>todo</code>, debug macros, and — most unusually —
+all floating-point arithmetic. The no-floats-in-money rule is not a convention anyone has to
+remember; it is a compiler error.</p>
+<h2 id="why-100-coverage-with-no-exceptions">Why 100% coverage, with no exceptions<a class="headerlink" href="#why-100-coverage-with-no-exceptions" title="Permanent link">&para;</a></h2>
+<p>Coverage targets like 80% sound reasonable and are nearly useless: the missing 20% drifts to
+exactly the error paths nobody tests, which are precisely the paths that matter when money is
+involved.</p>
+<p>The rule here is 100% on <code>domain</code>, <code>application</code>, <code>adapters</code> and the <code>simswarm</code> library —
+and, importantly, <strong>no exclusion list</strong>. The moment a file can be excluded, the hard cases
+move into excluded files.</p>
+<p>The one package not measured is <code>main</code>, which contains only wiring, and the justification is
+written in the file's own first line: <em>any logic in <code>main</code> is a review-blocker</em>. It is
+excluded because it is supposed to have nothing worth testing, and if that ever stops being
+true the exclusion becomes a bug.</p>
+<div class="admonition note">
+<p class="admonition-title">A tooling artifact that cost real hours, three times</p>
+<p>The coverage tool's human-readable summary sometimes reports lines as uncovered that the
+detailed data shows are covered. It happens when the same code is compiled into more than
+one binary — the ordinary build and the test build of the same file. The summary folds
+those records by taking the <strong>maximum</strong> of covered-or-not rather than the <strong>union</strong>, so a
+line exercised by only one of them is reported as missed.</p>
+<p>Because that under-reports, the gate does not use the summary. It exports the detailed
+line data and asserts on the union (<code>scripts/coverage_gate.py</code>): <strong>zero uncovered lines,
+no exclusions.</strong> The summary is still printed for humans; the union is what fails the
+build.</p>
+<p>Worth noticing that the fix made the gate <em>stricter</em>, not looser. The easy response to
+"the tool is wrong" is an exclusion; the response taken was to measure honestly.</p>
+</div>
+<h2 id="the-mutation-gate-and-the-gate-on-the-gate">The mutation gate, and the gate on the gate<a class="headerlink" href="#the-mutation-gate-and-the-gate-on-the-gate" title="Permanent link">&para;</a></h2>
+<p>Coverage tells you a line ran. It does not tell you a test would have <em>noticed</em> if the line
+were wrong.</p>
+<p>Mutation testing does. A tool systematically introduces small bugs into the domain — flips a
+comparison, changes a constant, deletes a statement — and re-runs the tests. Every mutant the
+tests fail to catch is a place where the coverage is theatre. The bar is 90% caught.</p>
+<p>The interesting part is <code>just gate-test</code>, which tests the gate itself against four fixtures:
+a passing run, a failing run, a timed-out run, and an <strong>empty</strong> one. All three of the last
+three must be rejected.</p>
+<p>That empty fixture is the point. The classic way a quality gate becomes decorative is that it
+silently starts measuring nothing and keeps reporting success. This project made "measures
+nothing" an explicit failure, and then wrote a test to prove it stays that way.</p>
+<h2 id="the-kinds-of-tests">The kinds of tests<a class="headerlink" href="#the-kinds-of-tests" title="Permanent link">&para;</a></h2>
+<p><strong>Unit tests</strong> — the pricing arithmetic, the settlement maths, the state machines, the
+scoring formula. Fast, no database. They live in the same file as the code they test.</p>
+<p><strong>Property tests</strong> — thousands of randomly generated inputs asserting a rule rather than a
+case. Examples actually in the codebase: the constant-product invariant never decreases on a
+buy; a buy followed immediately by a sell is never profitable even at zero fee; the two
+prices always sum to a dollar within one micro; a no-side trade is exactly the mirror of a
+yes-side one; a settlement always conserves escrow with bounded dust; a fee split always
+reassembles to the gross.</p>
+<p><strong>Contract suites</strong> — one set of tests run twice: once against the in-memory fake, once
+against real PostgreSQL. This is what keeps the fast fake honest.</p>
+<p><strong>Concurrency tests</strong> — two operations racing deliberately: two withdrawals against one
+balance, a trade against a settlement, a credit conversion against a market unwind. These are
+the tests that found the real deadlock in this codebase — by hanging, which is the honest
+symptom.</p>
+<p><strong>Chaos tests</strong> — the process is killed at the most dangerous instant. There is an injected
+crash point with exactly one call site, immediately after the payout ledger write, and
+recovery must be provably exactly-once. There are also fault switches that delay the outbox
+relay and drop every Nth WebSocket frame.</p>
+<p><strong>The swarm</strong> — up to two thousand simulated users, driving only the public API. See
+<a href="../the-swarm/">The swarm</a>.</p>
+<h2 id="red-team-tests-the-ones-that-must-fail">Red-team tests: the ones that must fail<a class="headerlink" href="#red-team-tests-the-ones-that-must-fail" title="Permanent link">&para;</a></h2>
+<p>A specific and unusual category. These tests assert that an attack <strong>does not work</strong>:</p>
+<ul>
+<li>Wash-trade to run up fee volume after a bonus grant → the bonus does <strong>not</strong> convert,
+  because provisional fee progress is not finalised progress.</li>
+<li>A market that voids → the fee allocations never finalise, so the bonus still does not
+  convert.</li>
+<li>Two accounts sharing one verified phone number → at most one becomes grant-eligible.</li>
+<li>A deposit from an account that fails compliance → lands in suspense, never spendable.</li>
+<li>A withdrawal to an address warmed by a tiny payment → still requires review, because
+  warmth needs both a floor amount and elapsed time.</li>
+<li>A withdrawal whose destination is shared with another user, or is a refund address → never
+  warm.</li>
+<li>A trade without the configuration stamp → refused before a transaction opens.</li>
+<li>A configuration change proposed and confirmed by the same token id → rejected, by the
+  database as well as the code.</li>
+<li>A coordinated voting ring → the integrity sweep's signals fire.</li>
+</ul>
+<p>Each exists because a reviewer described exactly how they would exploit the design <em>before</em>
+it was built.</p>
+<h2 id="service-level-targets">Service-level targets<a class="headerlink" href="#service-level-targets" title="Permanent link">&para;</a></h2>
+<p>The swarm is not only about correctness — it is about timing. The release profile enforces:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trade confirmation</td>
+<td>95th percentile under <strong>300 ms</strong></td>
+</tr>
+<tr>
+<td>Market close → everyone paid</td>
+<td>99th percentile under <strong>1 second</strong></td>
+</tr>
+<tr>
+<td>Live update delivery</td>
+<td>95th percentile under <strong>100 ms</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Those three numbers are constants in the swarm library, so the gate and the documentation
+cannot drift apart.</p>
+<p>And there is a rule that stops the classic cheat: <strong>a measurement series with fewer samples
+than expected fails.</strong> Before checking any percentile, the gate checks that enough
+observations exist at all. An empty series is not a pass; it is a missing test. This is the
+same principle as the empty-fixture check on the mutation gate, applied to performance.</p>
+<h2 id="the-frozen-manifest">The frozen manifest<a class="headerlink" href="#the-frozen-manifest" title="Permanent link">&para;</a></h2>
+<p>A list of 58 files — migrations, shared ports, the composition root, the HTTP router — that
+only the coordinating role may change, tracked by SHA-256 checksum.</p>
+<p>During construction several AI agents worked in parallel on separate areas of the same
+working tree with no version control to fall back on. This file caught several accidental
+cross-edits before they could cause a conflict that nothing could undo.</p>
+<h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../the-swarm/">The swarm</a> — the biggest test in the project.</li>
+<li><a href="../how-this-was-built/">How this was built</a> — why the bar is set here.</li>
+<li><a href="../../money/invariants/">Rules that can never break</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "toc.follow", "content.code.copy", "search.highlight", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

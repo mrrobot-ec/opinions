@@ -1,0 +1,1887 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A plain-language guide to the Opinions opinion market, written for people who have never built software.">
+      
+      
+      
+      
+        <link rel="prev" href="../invariants/">
+      
+      
+        <link rel="next" href="../withdrawal-states/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Deposits and withdrawals - Opinions — How It Works</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deposits-and-withdrawals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Opinions — How It Works" class="md-header__button md-logo" aria-label="Opinions — How It Works" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Opinions — How It Works
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deposits and withdrawals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Opinions — How It Works" class="md-nav__button md-logo" aria-label="Opinions — How It Works" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Opinions — How It Works
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Start here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What this project is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/how-the-market-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How the market works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/scoring-and-reputation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scoring and reputation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/a-day-in-the-life/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A day in the life
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start-here/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it is built
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How it is built
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/big-picture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The big picture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/clean-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why the code is split up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/codebase-tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour of the codebase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/the-database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Where the data lives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The eleven migrations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/live-updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How live updates work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/control-plane/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The control plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/frontends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The website and the iMessage bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Following the money
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Following the money
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ledger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The ledger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fees-and-pricing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prices and fees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../invariants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules that can never break
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deposits and withdrawals
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deposits and withdrawals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deposits-record-first-decide-second" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deposits: record first, decide second
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deposits: record first, decide second">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-record-it-even-when-we-will-refuse-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why record it even when we will refuse it?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-two-transactions-rather-than-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why two transactions rather than one?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-wait-for-confirmations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why wait for confirmations?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-banned-users-deposit-is-still-recorded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A banned user's deposit is still recorded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refunds-go-back-where-they-came-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refunds go back where they came from
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#withdrawals-hold-first-send-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Withdrawals: hold first, send once
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Withdrawals: hold first, send once">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-move-the-money-before-deciding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why move the money before deciding?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signing-before-sending-is-the-whole-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signing before sending is the whole trick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-dont-know-is-a-real-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "I don't know" is a real answer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-destinations-are-not-trusted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New destinations are not trusted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daily-limits-count-settled-withdrawals-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily limits count settled withdrawals too
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bonus-credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus credits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../withdrawal-states/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The fifteen withdrawal states
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compliance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keeping it legal and safe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Watch it happen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Watch it happen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/trade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Placing a trade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/vote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Casting a vote
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../walkthroughs/payout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting paid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running it yourself
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Running it yourself
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Set it up locally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/tests-and-gates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests and quality gates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/the-swarm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The swarm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running/how-this-was-built/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How this was built
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deposits-record-first-decide-second" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deposits: record first, decide second
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deposits: record first, decide second">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-record-it-even-when-we-will-refuse-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why record it even when we will refuse it?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-two-transactions-rather-than-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why two transactions rather than one?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-wait-for-confirmations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why wait for confirmations?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-banned-users-deposit-is-still-recorded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A banned user's deposit is still recorded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refunds-go-back-where-they-came-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refunds go back where they came from
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#withdrawals-hold-first-send-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Withdrawals: hold first, send once
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Withdrawals: hold first, send once">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-move-the-money-before-deciding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why move the money before deciding?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signing-before-sending-is-the-whole-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signing before sending is the whole trick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-dont-know-is-a-real-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "I don't know" is a real answer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-destinations-are-not-trusted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New destinations are not trusted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daily-limits-count-settled-withdrawals-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily limits count settled withdrawals too
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bonus-credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus credits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="deposits-and-withdrawals">Deposits and withdrawals<a class="headerlink" href="#deposits-and-withdrawals" title="Permanent link">&para;</a></h1>
+<p>Money crossing the boundary between the real world and the system is the riskiest thing
+the software does. This page explains the two flows and the reasoning behind each rule.
+<a href="../withdrawal-states/">The fifteen withdrawal states</a> has the mechanical detail; this page
+has the <em>why</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">What exists, and what does not</p>
+<p>The blockchain rail is real code targeting a Solana test network. The card-based
+"onramp" that would let somebody deposit with a debit card is an open item gated on
+vendor approvals, and is not built. Everything below concerns money that has already
+arrived on-chain, or is leaving that way.</p>
+</div>
+<h2 id="deposits-record-first-decide-second">Deposits: record first, decide second<a class="headerlink" href="#deposits-record-first-decide-second" title="Permanent link">&para;</a></h2>
+<p>The instinct is to check the rules and then record the money. This project does the
+opposite, on purpose.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["Money arrives on-chain"] --&gt; B{"Finalised deeply enough&lt;br/&gt;to be irreversible?"}
+    B --&gt;|not yet| A
+    B --&gt;|yes| C["ALWAYS record it&lt;br/&gt;External to Deposit suspense&lt;br/&gt;(one transaction)"]
+    C --&gt; D["Separate transaction:&lt;br/&gt;the compliance gate"]
+    D --&gt; E{"Verified? Permitted region?&lt;br/&gt;Sanctions clear? Under limits?&lt;br/&gt;Deposits not paused?"}
+    E --&gt;|all pass| F["Suspense to the user's balance&lt;br/&gt;admitted"]
+    E --&gt;|any fail| G["Compliance hold&lt;br/&gt;money stays in suspense"]
+    G --&gt; H["Later: released after review,&lt;br/&gt;or refunded to the sender"]</code></pre>
+<h3 id="why-record-it-even-when-we-will-refuse-it">Why record it even when we will refuse it?<a class="headerlink" href="#why-record-it-even-when-we-will-refuse-it" title="Permanent link">&para;</a></h3>
+<p>Because <strong>the money is already there</strong>. Anyone can send funds to their deposit address at
+any moment; nobody asks permission first.</p>
+<p>If the software refused to write that down, the wallet would hold money the ledger did not
+know about — and the invariant that says the ledger and the wallet agree would break. That
+invariant exists to detect theft. An alarm that rings constantly for innocent reasons is an
+alarm everybody learns to ignore, at which point it no longer detects theft either.</p>
+<p>So: record always, then decide availability separately.</p>
+<h3 id="why-two-transactions-rather-than-one">Why two transactions rather than one?<a class="headerlink" href="#why-two-transactions-rather-than-one" title="Permanent link">&para;</a></h3>
+<p>Because a crash between "the money arrived" and "the money is spendable" has to land
+somewhere well-defined.</p>
+<p>Splitting the flow means the first transaction is small and always succeeds, and the
+deposit sits in a named state — <code>observed_finalized</code> — that a later pass can pick up and
+finish. A single combined step would have a window where a crash loses the inflow entirely,
+and losing an inflow is unrecoverable: the money is on-chain and the books do not know.</p>
+<p>The full set of deposit states runs <code>observed_finalized</code> → <code>admission_pending</code> →
+<code>admitted</code>, or branches to <code>compliance_hold</code> → <code>refund_approved</code> → <code>refund_sending</code> →
+<code>refunded</code>. A database check constraint enforces that a deposit can never be both admitted
+and refunded, and another enforces that an observation carries its complete on-chain
+identity — source address, destination, token, slot — so a deposit row can always be tied
+back to a real event.</p>
+<h3 id="why-wait-for-confirmations">Why wait for confirmations?<a class="headerlink" href="#why-wait-for-confirmations" title="Permanent link">&para;</a></h3>
+<p>Blockchains can briefly reorganise: a transaction that looked settled can be undone within
+the first moments. So the software waits until the deposit is final before recording
+anything. A reversal before that point means nothing was ever credited — there is nothing
+to undo.</p>
+<p>After that point, the project states plainly in its operations documentation that a deeper
+reorganisation is an accepted house loss and will not be clawed back from the user. That is
+a <em>stated</em> position rather than an unexamined gap, which is the distinction worth noticing.</p>
+<h3 id="a-banned-users-deposit-is-still-recorded">A banned user's deposit is still recorded<a class="headerlink" href="#a-banned-users-deposit-is-still-recorded" title="Permanent link">&para;</a></h3>
+<p>One rule that looks strange until you see the reasoning: being banned does <strong>not</strong> stop a
+deposit being booked into suspense. Only the outbound side is frozen.</p>
+<p>The logic is the same as above — the money physically arrived, so the books must say so.
+What a ban stops is the money becoming spendable, and it stops it leaving. Refusing to
+record an inbound payment from a banned user would not un-receive it; it would only make
+the accounts wrong.</p>
+<h3 id="refunds-go-back-where-they-came-from">Refunds go back where they came from<a class="headerlink" href="#refunds-go-back-where-they-came-from" title="Permanent link">&para;</a></h3>
+<p>If a deposit is refused, the refund is sent <strong>only to the address it came from</strong> — never to
+an address supplied in the request. Otherwise "deposit, get refused, refund elsewhere"
+becomes a laundering path that the system politely operates for free.</p>
+<p>Refunds ride the same outbound payment machinery as withdrawals: the same
+sign-before-broadcast lineage, the same attempt-uniqueness indexes, the same three-outcome
+reconciliation. That was a specific design ruling during construction — settling a refund
+from a bare transaction signature was rejected as not good enough.</p>
+<h2 id="withdrawals-hold-first-send-once">Withdrawals: hold first, send once<a class="headerlink" href="#withdrawals-hold-first-send-once" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A["User requests $25"] --&gt; B["Immediately move&lt;br/&gt;balance to Withheld"]
+    B --&gt; C{"Screening: verified? banned?&lt;br/&gt;self-excluded? AML flags?&lt;br/&gt;within limits? destination warm?"}
+    C --&gt;|"small, warm dest, all clear"| D["Auto-approved"]
+    C --&gt;|"large, new dest, or flagged"| E["Human review"]
+    E --&gt;|"at or above the threshold"| F["TWO different staff&lt;br/&gt;must approve"]
+    C --&gt;|denied| L["Withheld back to balance&lt;br/&gt;released"]
+    D --&gt; G["Sign the payment&lt;br/&gt;and SAVE the signed bytes"]
+    F --&gt; G
+    G --&gt; H["Broadcast to the blockchain"]
+    H --&gt; I{"Did it land?"}
+    I --&gt;|finalised| J["Withheld to External&lt;br/&gt;done"]
+    I --&gt;|"proven not to have landed"| L
+    I --&gt;|unknown| K["Keep holding,&lt;br/&gt;keep asking, page a human"]</code></pre>
+<h3 id="why-move-the-money-before-deciding">Why move the money before deciding?<a class="headerlink" href="#why-move-the-money-before-deciding" title="Permanent link">&para;</a></h3>
+<p>Because otherwise you could request a withdrawal and spend the same money on a trade while
+the withdrawal was being reviewed. Moving it to <strong>Withheld</strong> immediately makes that
+impossible. It is still your money — it just cannot be double-spent.</p>
+<p>It also gives the accounting a clean fact to check. Invariant 10 says the withheld account's
+balance equals the sum of active withdrawal holds, exactly. That check is only possible
+because the hold is the <em>first</em> thing that happens.</p>
+<h3 id="signing-before-sending-is-the-whole-trick">Signing before sending is the whole trick<a class="headerlink" href="#signing-before-sending-is-the-whole-trick" title="Permanent link">&para;</a></h3>
+<p>The most dangerous moment in the system is the instant between "send payment" and "record
+that we sent it". A crash there could mean paying someone twice.</p>
+<p>The solution: <strong>the exact signed payment is written to the database before it is
+broadcast.</strong> After a crash, the software restarts, finds a signed payment with no recorded
+outcome, and asks the network: <em>did this specific payment land?</em> It never signs a fresh one
+blindly.</p>
+<h3 id="i-dont-know-is-a-real-answer">"I don't know" is a real answer<a class="headerlink" href="#i-dont-know-is-a-real-answer" title="Permanent link">&para;</a></h3>
+<p>Networks time out. The software has three outcomes, not two: finalised, definitively
+failed, and unknown. Unknown keeps the money held and keeps asking.</p>
+<p>Declaring failure requires proof — agreement from <strong>two of three independent</strong> archival
+sources that the transaction's window has passed <em>and</em> the signature does not exist. A
+single lagging server saying "not found" is not proof.</p>
+<h3 id="new-destinations-are-not-trusted">New destinations are not trusted<a class="headerlink" href="#new-destinations-are-not-trusted" title="Permanent link">&para;</a></h3>
+<p>An address the system has never successfully paid does not qualify for automatic approval.
+Becoming trusted requires at least <strong>$100 settled</strong> to it and at least <strong>72 hours</strong> since
+the first settlement — so an attacker cannot warm up an address with a one-cent payment and
+then drain to it.</p>
+<h3 id="daily-limits-count-settled-withdrawals-too">Daily limits count settled withdrawals too<a class="headerlink" href="#daily-limits-count-settled-withdrawals-too" title="Permanent link">&para;</a></h3>
+<p>An early design counted only in-flight withdrawals against the daily cap. A reviewer spotted
+the hole: request the daily maximum, wait for it to settle, request it again. The rule now
+counts <strong>every request in the rolling 24-hour window</strong> except ones that were denied or
+provably failed.</p>
+<p>There are three such windows, all checked: per user ($2,000), per destination address
+($1,000), and across the hot wallet as a whole ($10,000).</p>
+<h2 id="bonus-credits">Bonus credits<a class="headerlink" href="#bonus-credits" title="Permanent link">&para;</a></h2>
+<p>Promotional bonuses are <strong>credits</strong>, not cash. They live in a separate currency
+(<code>usdc_credit</code>) that the ledger's per-currency balancing rule physically prevents from
+mixing with real money inside a transaction.</p>
+<p>A credit converts to withdrawable cash only when <strong>finalised</strong> fee progress covers the
+credit's full amount. Two words in that sentence are doing real work:</p>
+<p><strong>"Finalised."</strong> Fees count toward a credit only once the market they were paid on reaches
+its <code>Paid</code> state. An earlier design counted them immediately, and a reviewer showed the
+exploit: a market could later be unwound, returning the fees to the user <em>after</em> the credit
+had already converted — netting free money twice. Now a fee allocation is <em>provisional</em>
+when the trade happens and only becomes final at settlement. A voided market's allocations
+never finalise at all.</p>
+<p><strong>"Covers."</strong> The bar is the whole stamped amount of the credit, not a fraction of it.</p>
+<p>Two more rules make the promotion safe for the house:</p>
+<ul>
+<li><strong>Reserved at grant, not at claim.</strong> A credit cannot be granted unless the segregated
+  bonus reserve already covers it. A reviewer caught the earlier version, where the check
+  happened at claim time — meaning a promotion could promise more than the house could pay
+  and only discover it when people tried to collect.</li>
+<li><strong>A daily minting cap.</strong> All grants take the reserve account as a mutex and check a
+  rolling 24-hour cap, so no class of grant can race around it.</li>
+</ul>
+<p>Referral bonuses have their own gate: a grant requires the referee's <em>verified phone</em> fact,
+and both legs mint only when the referee's first market reaches <code>Paid</code>. Two accounts sharing
+one phone number produce at most one eligible grant.</p>
+<h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../withdrawal-states/">The fifteen withdrawal states</a> — the mechanics, state by state.</li>
+<li><a href="../compliance/">Keeping it legal and safe</a></li>
+<li><a href="../invariants/">Rules that can never break</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "toc.follow", "content.code.copy", "search.highlight", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
